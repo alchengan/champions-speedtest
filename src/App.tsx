@@ -7,15 +7,21 @@ function App() {
   return (
     <div className="App">
       <header>FASTFASTFASTFASTFAST</header>
-      <Grid container>
-        <Grid size={4}>
-          <p>yuhyuhuyuhuyuh</p>
-          <PokemonBuild />
+      <div className="p-8">
+        <Grid container spacing={2}>
+          <Grid size={4}>
+            <div className="p-4 border-2">
+              <p className="text-3xl font-bold underline">yuhyuhuyuhuyuh</p>
+              <PokemonBuild />
+            </div>
+          </Grid>
+          <Grid size={8}>
+            <div className="p-4 border-2">
+              <p>nononononononono</p>
+            </div>
+          </Grid>
         </Grid>
-        <Grid size={8}>
-          <p>nononononononono</p>
-        </Grid>
-      </Grid>
+      </div>
     </div>
   );
 }

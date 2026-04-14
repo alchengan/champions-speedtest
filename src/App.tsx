@@ -1,24 +1,21 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { Grid } from "@mui/material";
+import PokemonBuild from "./components/PokemonBuild";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header>FASTFASTFASTFASTFAST</header>
+      <Grid container>
+        <Grid size={4}>
+          <p>yuhyuhuyuhuyuh</p>
+          <PokemonBuild />
+        </Grid>
+        <Grid size={8}>
+          <p>nononononononono</p>
+        </Grid>
+      </Grid>
     </div>
   );
 }

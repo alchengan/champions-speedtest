@@ -11,7 +11,6 @@ function App() {
         <Grid container spacing={2}>
           <Grid size={4}>
             <div className="p-4 border-2">
-              <p className="text-3xl font-bold underline">yuhyuhuyuhuyuh</p>
               <PokemonBuild />
             </div>
           </Grid>

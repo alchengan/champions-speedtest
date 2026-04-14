@@ -7,6 +7,8 @@ import Checkbox from "@mui/material/Checkbox";
 import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import NumberField from "./NumberField";
 import { NumberFieldRootChangeEventDetails } from "@base-ui/react";
 
@@ -72,6 +74,9 @@ export default function PokemonBuild() {
     },
   ];
 
+  // temp
+  const pokemonList = [{ label: "Rotom-Wash", name: "Rotom-Wash" }];
+
   const handleNatureModChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNatureMod((e.target as HTMLInputElement).value);
   };
@@ -92,30 +97,55 @@ export default function PokemonBuild() {
   return (
     <>
       <FormControl fullWidth>
-        <FormGroup row>
-          <FormControlLabel control={<Checkbox />} label="Tailwind" />
-          <FormControlLabel control={<Checkbox />} label="Choice Scarf" />
-          <FormControlLabel control={<Checkbox />} label="Paralyzed" />
-        </FormGroup>
         <div>
-          <NumberField
-            label="EV Points"
-            value={evPoints}
-            step={1}
-            min={0}
-            max={32}
-            size="small"
-            onValueChange={handleEVFieldChange}
-          />
-          <Slider
-            aria-label="EV Points"
-            value={evPoints}
-            shiftStep={1}
-            step={1}
-            min={0}
-            max={32}
-            onChange={handleEVPointsChange}
-          />
+          <div className="flex gap-x-6">
+            <div className="grid">
+              <Autocomplete
+                disablePortal
+                options={pokemonList}
+                renderInput={(params) => (
+                  <TextField {...params} label="Choose Pokémon" />
+                )}
+              />
+              <img
+                src="https://archives.bulbagarden.net/media/upload/3/36/0479Rotom-Wash.png"
+                className="w-48"
+              />
+            </div>
+            <div className="grid content-between justify-items-start gap-y-2">
+              <div className="grid justify-items-start">
+                <p>Base Speed: 86</p>
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Speed Ability"
+                />
+              </div>
+              <div className="grid">
+                <p className="text-2xl font-bold">Speed</p>
+                <p className="text-8xl font-bold pb-4">106</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-x-6">
+            <NumberField
+              label="EV Points"
+              value={evPoints}
+              step={1}
+              min={0}
+              max={32}
+              size="small"
+              onValueChange={handleEVFieldChange}
+            />
+            <Slider
+              aria-label="EV Points"
+              value={evPoints}
+              shiftStep={1}
+              step={1}
+              min={0}
+              max={32}
+              onChange={handleEVPointsChange}
+            />
+          </div>
         </div>
         <div>
           <FormLabel>Stat Modifier</FormLabel>
@@ -131,18 +161,24 @@ export default function PokemonBuild() {
             track={false}
           />
         </div>
-        <FormGroup>
-          <FormLabel>Nature</FormLabel>
+        <FormGroup row className="gap-6">
+          <FormLabel className="mt-2">Nature</FormLabel>
           <RadioGroup
             name="nature-mod"
             value={natureMod}
             onChange={handleNatureModChange}
             row
+            className="justify-between gap-4"
           >
             <FormControlLabel value="negative" control={<Radio />} label="-" />
             <FormControlLabel value="neutral" control={<Radio />} label="o" />
             <FormControlLabel value="positive" control={<Radio />} label="+" />
           </RadioGroup>
+        </FormGroup>
+        <FormGroup row className="justify-between">
+          <FormControlLabel control={<Checkbox />} label="Tailwind" />
+          <FormControlLabel control={<Checkbox />} label="Choice Scarf" />
+          <FormControlLabel control={<Checkbox />} label="Paralyzed" />
         </FormGroup>
       </FormControl>
     </>

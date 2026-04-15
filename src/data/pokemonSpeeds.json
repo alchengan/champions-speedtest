@@ -626,5 +626,776 @@
    "name": "Mega Gyarados",
    "speed": 81,
    "pokeApiId": 10041
+},
+ {
+   "name": "Hatterene",
+   "speed": 29,
+   "pokeApiId": 858
+},
+ {
+   "name": "Hawlucha",
+   "speed": 118,
+   "abilities": [
+      "Unburden"
+   ],
+   "pokeApiId": 701
+},
+ {
+   "name": "Mega Hawlucha",
+   "speed": 118,
+   "pokeApiId": 10300
+},
+ {
+   "name": "Heliolisk",
+   "speed": 109,
+   "pokeApiId": 695
+},
+ {
+   "name": "Heracross",
+   "speed": 85,
+   "pokeApiId": 214
+},
+ {
+   "name": "Mega Heracross",
+   "speed": 75,
+   "pokeApiId": 10047
+},
+ {
+   "name": "Hippowdon",
+   "speed": 47,
+   "pokeApiId": 450
+},
+ {
+   "name": "Houndoom",
+   "speed": 95,
+   "pokeApiId": 229
+},
+ {
+   "name": "Mega Houndoom",
+   "speed": 115,
+   "pokeApiId": 10048
+},
+ {
+   "name": "Hydrapple",
+   "speed": 44,
+   "pokeApiId": 1019
+},
+ {
+   "name": "Hydreigon",
+   "speed": 98,
+   "pokeApiId": 635
+},
+ {
+   "name": "Incineroar",
+   "speed": 60,
+   "pokeApiId": 727
+},
+ {
+   "name": "Infernape",
+   "speed": 108,
+   "pokeApiId": 392
+},
+ {
+   "name": "Jolteon",
+   "speed": 130,
+   "abilities": [
+      "Quick Feet"
+   ],
+   "pokeApiId": 135
+},
+ {
+   "name": "Kangaskhan",
+   "speed": 90,
+   "pokeApiId": 115
+},
+ {
+   "name": "Mega Kangaskhan",
+   "speed": 100,
+   "pokeApiId": 10039
+},
+ {
+   "name": "Kingambit",
+   "speed": 50,
+   "pokeApiId": 983
+},
+ {
+   "name": "Kleavor",
+   "speed": 85,
+   "pokeApiId": 900
+},
+ {
+   "name": "Klefki",
+   "speed": 75,
+   "pokeApiId": 707
+},
+ {
+   "name": "Kommo-o",
+   "speed": 85,
+   "pokeApiId": 784
+},
+ {
+   "name": "Krookodile",
+   "speed": 92,
+   "pokeApiId": 553
+},
+ {
+   "name": "Leafeon",
+   "speed": 95,
+   "abilities": [
+      "Chlorophyll"
+   ],
+   "pokeApiId": 470
+},
+ {
+   "name": "Liepard",
+   "speed": 106,
+   "abilities": [
+      "Unburden"
+   ],
+   "pokeApiId": 510
+},
+ {
+   "name": "Lopunny",
+   "speed": 105,
+   "pokeApiId": 428
+},
+ {
+   "name": "Mega Lopunny",
+   "speed": 135,
+   "pokeApiId": 10088
+},
+ {
+   "name": "Lucario",
+   "speed": 90,
+   "pokeApiId": 448
+},
+ {
+   "name": "Mega Lucario",
+   "speed": 112,
+   "pokeApiId": 10059
+},
+ {
+   "name": "Luxray",
+   "speed": 70,
+   "pokeApiId": 405
+},
+ {
+   "name": "Lycanroc (Midday)",
+   "speed": 112,
+   "abilities": [
+      "Sand Rush"
+   ],
+   "pokeApiId": 745
+},
+ {
+   "name": "Lycanroc (Dusk)",
+   "speed": 110,
+   "pokeApiId": 10126
+},
+ {
+   "name": "Lycanroc (Midnight)",
+   "speed": 82,
+   "pokeApiId": 10152
+},
+ {
+   "name": "Machamp",
+   "speed": 55,
+   "pokeApiId": 68
+},
+ {
+   "name": "Mamoswine",
+   "speed": 80,
+   "pokeApiId": 473
+},
+ {
+   "name": "Manectric",
+   "speed": 105,
+   "pokeApiId": 310
+},
+ {
+   "name": "Mega Manectric",
+   "speed": 135,
+   "pokeApiId": 10055
+},
+ {
+   "name": "Maushold",
+   "speed": 111,
+   "pokeApiId": 925
+},
+ {
+   "name": "Medicham",
+   "speed": 80,
+   "pokeApiId": 308
+},
+ {
+   "name": "Mega Medicham",
+   "speed": 100,
+   "pokeApiId": 10054
+},
+ {
+   "name": "Meganium",
+   "speed": 80,
+   "pokeApiId": 154
+},
+ {
+   "name": "Mega Meganium",
+   "speed": 80,
+   "pokeApiId": 10282
+},
+ {
+   "name": "Meowscarada",
+   "speed": 123,
+   "pokeApiId": 908
+},
+ {
+   "name": "Meowstic",
+   "speed": 104,
+   "pokeApiId": 678
+},
+ {
+   "name": "Mega Meowstic",
+   "speed": 124,
+   "pokeApiId": 10314
+},
+ {
+   "name": "Milotic",
+   "speed": 81,
+   "pokeApiId": 350
+},
+ {
+   "name": "Mimikyu",
+   "speed": 96,
+   "pokeApiId": 778
+},
+ {
+   "name": "Morpeko",
+   "speed": 97,
+   "pokeApiId": 877
+},
+ {
+   "name": "Mr. Rime",
+   "speed": 70,
+   "pokeApiId": 866
+},
+ {
+   "name": "Mudsdale",
+   "speed": 35,
+   "pokeApiId": 750
+},
+ {
+   "name": "Ninetales",
+   "speed": 100,
+   "pokeApiId": 38
+},
+ {
+   "name": "Alolan Ninetales",
+   "speed": 109,
+   "pokeApiId": 10104
+},
+ {
+   "name": "Noivern",
+   "speed": 123,
+   "pokeApiId": 715
+},
+ {
+   "name": "Oranguru",
+   "speed": 60,
+   "pokeApiId": 765
+},
+ {
+   "name": "Orthworm",
+   "speed": 65,
+   "pokeApiId": 968
+},
+ {
+   "name": "Palafin",
+   "speed": 100,
+   "pokeApiId": 10256
+},
+ {
+   "name": "Pangoro",
+   "speed": 58,
+   "pokeApiId": 675
+},
+ {
+   "name": "Passimian",
+   "speed": 80,
+   "pokeApiId": 766
+},
+ {
+   "name": "Pelipper",
+   "speed": 65,
+   "pokeApiId": 279
+},
+ {
+   "name": "Pidgeot",
+   "speed": 101,
+   "pokeApiId": 18
+},
+ {
+   "name": "Mega Pidgeot",
+   "speed": 121,
+   "pokeApiId": 10073
+},
+ {
+   "name": "Pinsir",
+   "speed": 85,
+   "pokeApiId": 127
+},
+ {
+   "name": "Mega Pinsir",
+   "speed": 105,
+   "pokeApiId": 10040
+},
+ {
+   "name": "Politoed",
+   "speed": 70,
+   "pokeApiId": 186
+},
+ {
+   "name": "Polteageist",
+   "speed": 70,
+   "pokeApiId": 855
+},
+ {
+   "name": "Primarina",
+   "speed": 60,
+   "pokeApiId": 730
+},
+ {
+   "name": "Quaquaval",
+   "speed": 85,
+   "pokeApiId": 914
+},
+ {
+   "name": "Raichu",
+   "speed": 110,
+   "pokeApiId": 26
+},
+ {
+   "name": "Alolan Raichu",
+   "speed": 110,
+   "abilities": [
+      "Surge Surfer"
+   ],
+   "pokeApiId": 10100
+},
+ {
+   "name": "Rampardos",
+   "speed": 58,
+   "pokeApiId": 409
+},
+ {
+   "name": "Reuniclus",
+   "speed": 30,
+   "pokeApiId": 579
+},
+ {
+   "name": "Rhyperior",
+   "speed": 40,
+   "pokeApiId": 464
+},
+ {
+   "name": "Roserade",
+   "speed": 90,
+   "pokeApiId": 407
+},
+ {
+   "name": "Rotom",
+   "speed": 91,
+   "pokeApiId": 479
+},
+ {
+   "name": "Rotom Fan",
+   "speed": 86,
+   "pokeApiId": 10011
+},
+ {
+   "name": "Rotom Frost",
+   "speed": 86,
+   "pokeApiId": 10010
+},
+ {
+   "name": "Rotom Heat",
+   "speed": 86,
+   "pokeApiId": 10008
+},
+ {
+   "name": "Rotom Mow",
+   "speed": 86,
+   "pokeApiId": 10012
+},
+ {
+   "name": "Rotom Wash",
+   "speed": 86,
+   "pokeApiId": 10009
+},
+ {
+   "name": "Runerigus",
+   "speed": 30,
+   "pokeApiId": 867
+},
+ {
+   "name": "Sableye",
+   "speed": 50,
+   "pokeApiId": 302
+},
+ {
+   "name": "Mega Sableye",
+   "speed": 20,
+   "pokeApiId": 10066
+},
+ {
+   "name": "Salazzle",
+   "speed": 117,
+   "pokeApiId": 758
+},
+ {
+   "name": "Samurott",
+   "speed": 70,
+   "pokeApiId": 503
+},
+ {
+   "name": "Hisuian Samurott",
+   "speed": 85,
+   "pokeApiId": 10236
+},
+ {
+   "name": "Sandaconda",
+   "speed": 71,
+   "pokeApiId": 844
+},
+ {
+   "name": "Scizor",
+   "speed": 65,
+   "pokeApiId": 212
+},
+ {
+   "name": "Mega Scizor",
+   "speed": 75,
+   "pokeApiId": 10046
+},
+ {
+   "name": "Scovillain",
+   "speed": 75,
+   "abilities": [
+      "Chlorophyll"
+   ],
+   "pokeApiId": 952
+},
+ {
+   "name": "Mega Scovillain",
+   "speed": 75,
+   "pokeApiId": 10320
+},
+ {
+   "name": "Serperior",
+   "speed": 113,
+   "pokeApiId": 497
+},
+ {
+   "name": "Sharpedo",
+   "speed": 95,
+   "pokeApiId": 319
+},
+ {
+   "name": "Mega Sharpedo",
+   "speed": 105,
+   "pokeApiId": 10070
+},
+ {
+   "name": "Simipour",
+   "speed": 101,
+   "pokeApiId": 516
+},
+ {
+   "name": "Simisage",
+   "speed": 101,
+   "pokeApiId": 512
+},
+ {
+   "name": "Simisear",
+   "speed": 101,
+   "pokeApiId": 514
+},
+ {
+   "name": "Sinistcha",
+   "speed": 70,
+   "pokeApiId": 1013
+},
+ {
+   "name": "Skarmory",
+   "speed": 70,
+   "pokeApiId": 227
+},
+ {
+   "name": "Mega Skarmory",
+   "speed": 110,
+   "pokeApiId": 10284
+},
+ {
+   "name": "Skeledirge",
+   "speed": 66,
+   "pokeApiId": 911
+},
+ {
+   "name": "Slowbro",
+   "speed": 30,
+   "pokeApiId": 80
+},
+ {
+   "name": "Galarian Slowbro",
+   "speed": 30,
+   "pokeApiId": 10165
+},
+ {
+   "name": "Mega Slowbro",
+   "speed": 30,
+   "pokeApiId": 10071
+},
+ {
+   "name": "Slowking",
+   "speed": 30,
+   "pokeApiId": 199
+},
+ {
+   "name": "Galarian Slowking",
+   "speed": 30,
+   "pokeApiId": 10172
+},
+ {
+   "name": "Slurpuff",
+   "speed": 72,
+   "abilities": [
+      "Unburden"
+   ],
+   "pokeApiId": 685
+},
+ {
+   "name": "Sneasler",
+   "speed": 120,
+   "abilities": [
+      "Unburden"
+   ],
+   "pokeApiId": 903
+},
+ {
+   "name": "Snorlax",
+   "speed": 30,
+   "pokeApiId": 143
+},
+ {
+   "name": "Spiritomb",
+   "speed": 35,
+   "pokeApiId": 442
+},
+ {
+   "name": "Starmie",
+   "speed": 115,
+   "pokeApiId": 121
+},
+ {
+   "name": "Mega Starmie",
+   "speed": 120,
+   "pokeApiId": 10280
+},
+ {
+   "name": "Steelix",
+   "speed": 30,
+   "pokeApiId": 208
+},
+ {
+   "name": "Mega Steelix",
+   "speed": 30,
+   "pokeApiId": 10072
+},
+ {
+   "name": "Stunfisk",
+   "speed": 32,
+   "pokeApiId": 618
+},
+ {
+   "name": "Galarian Stunfisk",
+   "speed": 32,
+   "pokeApiId": 10180
+},
+ {
+   "name": "Sylveon",
+   "speed": 60,
+   "pokeApiId": 700
+},
+ {
+   "name": "Talonflame",
+   "speed": 126,
+   "pokeApiId": 663
+},
+ {
+   "name": "Tauros",
+   "speed": 110,
+   "pokeApiId": 128
+},
+ {
+   "name": "Paldean Tauros (Aqua Breed)",
+   "speed": 100,
+   "pokeApiId": 10252
+},
+ {
+   "name": "Paldean Tauros (Blaze Breed)",
+   "speed": 100,
+   "pokeApiId": 10251
+},
+ {
+   "name": "Paldean Tauros (Combat Breed)",
+   "speed": 100,
+   "pokeApiId": 10250
+},
+ {
+   "name": "Tinkaton",
+   "speed": 94,
+   "pokeApiId": 959
+},
+ {
+   "name": "Torkoal",
+   "speed": 20,
+   "pokeApiId": 324
+},
+ {
+   "name": "Torterra",
+   "speed": 56,
+   "pokeApiId": 389
+},
+ {
+   "name": "Toucannon",
+   "speed": 60,
+   "pokeApiId": 733
+},
+ {
+   "name": "Toxapex",
+   "speed": 35,
+   "pokeApiId": 748
+},
+ {
+   "name": "Toxicroak",
+   "speed": 85,
+   "pokeApiId": 454
+},
+ {
+   "name": "Trevenant",
+   "speed": 56,
+   "pokeApiId": 709
+},
+ {
+   "name": "Tsareena",
+   "speed": 72,
+   "pokeApiId": 763
+},
+ {
+   "name": "Typhlosion",
+   "speed": 100,
+   "pokeApiId": 157
+},
+ {
+   "name": "Hisuian Typhlosion",
+   "speed": 95,
+   "pokeApiId": 10233
+},
+ {
+   "name": "Tyranitar",
+   "speed": 61,
+   "pokeApiId": 248
+},
+ {
+   "name": "Mega Tyranitar",
+   "speed": 71,
+   "pokeApiId": 10049
+},
+ {
+   "name": "Tyrantrum",
+   "speed": 71,
+   "pokeApiId": 697
+},
+ {
+   "name": "Umbreon",
+   "speed": 65,
+   "pokeApiId": 197
+},
+ {
+   "name": "Vanilluxe",
+   "speed": 79,
+   "pokeApiId": 584
+},
+ {
+   "name": "Vaporeon",
+   "speed": 65,
+   "pokeApiId": 134
+},
+ {
+   "name": "Venusaur",
+   "speed": 80,
+   "abilities": [
+      "Chlorophyll"
+   ],
+   "pokeApiId": 3
+},
+ {
+   "name": "Mega Venusaur",
+   "speed": 80,
+   "pokeApiId": 10033
+},
+ {
+   "name": "Victreebel",
+   "speed": 70,
+   "abilities": [
+      "Chlorophyll"
+   ],
+   "pokeApiId": 71
+},
+ {
+   "name": "Mega Victreebel",
+   "speed": 70,
+   "pokeApiId": 10279
+},
+ {
+   "name": "Vivillon",
+   "speed": 89,
+   "pokeApiId": 666
+},
+ {
+   "name": "Volcarona",
+   "speed": 100,
+   "pokeApiId": 637
+},
+ {
+   "name": "Watchog",
+   "speed": 77,
+   "pokeApiId": 505
+},
+ {
+   "name": "Weavile",
+   "speed": 125,
+   "pokeApiId": 461
+},
+ {
+   "name": "Whimsicott",
+   "speed": 116,
+   "abilities": [
+      "Chlorophyll"
+   ],
+   "pokeApiId": 547
+},
+ {
+   "name": "Wyrdeer",
+   "speed": 65,
+   "pokeApiId": 899
+},
+ {
+   "name": "Zoroark",
+   "speed": 105,
+   "pokeApiId": 571
+},
+ {
+   "name": "Hisuian Zoroark",
+   "speed": 110,
+   "pokeApiId": 10239
 }
 ]

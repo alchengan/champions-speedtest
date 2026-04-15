@@ -1,30 +1,23 @@
-import React, {
-  ChangeEvent,
-  MouseEventHandler,
-  useEffect,
-  useState,
-} from "react";
-import Slider from "@mui/material/Slider";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import Checkbox from "@mui/material/Checkbox";
-import FormLabel from "@mui/material/FormLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import NumberField from "./NumberField";
-import { NumberFieldRootChangeEventDetails } from "@base-ui/react";
 import {
   GetPokemonTesteeOptions,
   PokemonSpeed,
   PokemonTesteeOption,
 } from "../helpers/getPokemon";
-import { GetAbilitySpeedModifier } from "../helpers/abilitySpeed";
+import { CalculateSpeed } from "../helpers/speedFunctions";
 import SpeedModifierOptions from "./SpeedModifierOptions";
+import { UserPokemon } from "./PokemonSpeedTest";
 
-export default function PokemonBuild() {
+interface PokemonBuildProps {
+  handleUserPokemonChange: (name: string, speed: number) => void;
+}
+
+export default function PokemonBuild({
+  handleUserPokemonChange,
+}: PokemonBuildProps) {
   const [testeePokemon, setTesteePokemon] = useState<PokemonSpeed>();
   const [baseSpeed, setBaseSpeed] = useState(0);
 
@@ -41,107 +34,39 @@ export default function PokemonBuild() {
   // when new pokemon is selected
   useEffect(() => {
     setBaseSpeed(testeePokemon ? testeePokemon.speed : 0);
+    setAbilityMod("");
   }, [testeePokemon]);
 
   // when any changes to stats are made
   // calculate speed
   useEffect(() => {
-    const natureValue =
-      natureMod === "negative" ? 0.9 : natureMod === "positive" ? 1.1 : 1;
-    const preModSpeed = Math.floor((baseSpeed + evPoints + 20) * natureValue);
-
-    // other speed changes in order (round down after each one):
-    // stat changes
-    const statMod =
-      statMods > 0 ? (2 + statMods) / 2 : statMods < 0 ? 2 / (2 - statMods) : 1;
-    const statModSpeed = Math.floor(preModSpeed * statMod);
-
-    // tailwind
-    const tailwindSpeed = isTailwind ? statModSpeed * 2 : statModSpeed;
-
-    // ability
-    //  x2: chlorophyll, sand rush, slush rush, surge surfer, swift swim, unburden
-    //  x1.5: protosynthesis, quark drive, quick feet
-    const abilityModSpeed = Math.floor(
-      tailwindSpeed * GetAbilitySpeedModifier(abilityMod),
+    setSpeedStat(
+      CalculateSpeed(
+        baseSpeed,
+        evPoints,
+        natureMod,
+        abilityMod,
+        statMods,
+        isTailwind,
+        isChoiceScarf,
+        isParalyzed,
+      ),
     );
-
-    // choice scarf
-    const choiceScarfSpeed = isChoiceScarf
-      ? abilityModSpeed * 1.5
-      : abilityModSpeed;
-
-    // para
-    const paralyzedSpeed = isParalyzed
-      ? Math.floor(choiceScarfSpeed * 0.5)
-      : choiceScarfSpeed;
-
-    setSpeedStat(paralyzedSpeed);
   }, [
     baseSpeed,
     evPoints,
     natureMod,
-    statMods,
     abilityMod,
+    statMods,
     isTailwind,
     isChoiceScarf,
     isParalyzed,
   ]);
 
-  const statModMarks = [
-    {
-      value: -6,
-      label: "-6",
-    },
-    {
-      value: -5,
-      label: "-5",
-    },
-    {
-      value: -4,
-      label: "-4",
-    },
-    {
-      value: -3,
-      label: "-3",
-    },
-    {
-      value: -2,
-      label: "-2",
-    },
-    {
-      value: -1,
-      label: "-1",
-    },
-    {
-      value: 0,
-      label: "0",
-    },
-    {
-      value: 1,
-      label: "+1",
-    },
-    {
-      value: 2,
-      label: "+2",
-    },
-    {
-      value: 3,
-      label: "+3",
-    },
-    {
-      value: 4,
-      label: "+4",
-    },
-    {
-      value: 5,
-      label: "+5",
-    },
-    {
-      value: 6,
-      label: "+6",
-    },
-  ];
+  // update user pokemon
+  useEffect(() => {
+    testeePokemon && handleUserPokemonChange(testeePokemon.name, speedStat);
+  }, [speedStat]);
 
   const pokemonList = GetPokemonTesteeOptions();
 

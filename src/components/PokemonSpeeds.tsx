@@ -1,17 +1,20 @@
 import { ScrollArea } from "@base-ui/react";
-import { GetPokemonSpeedsWithAbilities } from "../helpers/getPokemon";
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  GetPokemonSpeedsWithAbilities,
+  PokemonSpeedWithAbility,
+} from "../helpers/getPokemon";
+import { ChangeEvent, useState } from "react";
 import SpeedModifierOptions from "./SpeedModifierOptions";
 import { FormControl } from "@mui/material";
+import PokemonSpeedGroup from "./PokemonSpeedGroup";
+import { CalculateSpeed } from "../helpers/speedFunctions";
+
+type PokemonSpeedGroup = { [speed: number]: PokemonSpeedWithAbility[] };
 
 export default function PokemonSpeeds() {
   const [pokemonSpeedsWithAbilities, setPokemonSpeedWithAbilities] = useState(
     GetPokemonSpeedsWithAbilities(),
   );
-  const [
-    sortedPokemonSpeedsWithAbilities,
-    setSortedPokemonSpeedsWithAbilities,
-  ] = useState(pokemonSpeedsWithAbilities);
 
   const [evPoints, setEvPoints] = useState(0);
   const [natureMod, setNatureMod] = useState<string>("neutral");
@@ -21,7 +24,42 @@ export default function PokemonSpeeds() {
   const [isParalyzed, setIsParalyzed] = useState(false);
 
   // sort pokemon by speed and then by name
-  useEffect(() => {}, [pokemonSpeedsWithAbilities]);
+  const sortByAlpha = [...pokemonSpeedsWithAbilities];
+  sortByAlpha.sort((a: PokemonSpeedWithAbility, b: PokemonSpeedWithAbility) => {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  });
+
+  // calculate effective speeds
+  const sortByAlphaCalculatedSpeeds = sortByAlpha.map((pokemon) => ({
+    ...pokemon,
+    speed: CalculateSpeed(
+      pokemon.speed,
+      evPoints,
+      natureMod,
+      pokemon.ability ? pokemon.ability : "",
+      statMods,
+      isTailwind,
+      isChoiceScarf,
+      isParalyzed,
+    ),
+  }));
+
+  const sortBySpeed = sortByAlphaCalculatedSpeeds.reduce(
+    (map: PokemonSpeedGroup, poke: PokemonSpeedWithAbility) => {
+      if (!(poke.speed in map)) {
+        map[poke.speed] = [];
+      }
+      map[poke.speed].push(poke);
+      return map;
+    },
+    {} as PokemonSpeedGroup,
+  );
 
   const handleEVFieldChange = (newValue: number | null, e: any) => {
     if (newValue) {
@@ -57,68 +95,17 @@ export default function PokemonSpeeds() {
     <div className="flex h-full gap-x-6">
       <ScrollArea.Root className={"w-1/2 h-full"}>
         <ScrollArea.Viewport className={"h-full border-r-1"}>
-          <ScrollArea.Content>
+          <ScrollArea.Content className={"mr-6"}>
             <p>nononononoonononono</p>
-            <p>
-              Vernacular architecture is building done outside any academic
-              tradition, and without professional guidance. It is not a
-              particular architectural movement or style, but rather a broad
-              category, encompassing a wide range and variety of building types,
-              with differing methods of construction, from around the world,
-              both historical and extant and classical and modern. Vernacular
-              architecture constitutes 95% of the world's built environment, as
-              estimated in 1995 by Amos Rapoport, as measured against the small
-              percentage of new buildings every year designed by architects and
-              built by engineers.
-            </p>
-            <p>
-              This type of architecture usually serves immediate, local needs,
-              is constrained by the materials available in its particular region
-              and reflects local traditions and cultural practices. The study of
-              vernacular architecture does not examine formally schooled
-              architects, but instead that of the design skills and tradition of
-              local builders, who were rarely given any attribution for the
-              work. More recently, vernacular architecture has been examined by
-              designers and the building industry in an effort to be more energy
-              conscious with contemporary design and construction—part of a
-              broader interest in sustainable design.
-            </p>
-            <p>
-              This type of architecture usually serves immediate, local needs,
-              is constrained by the materials available in its particular region
-              and reflects local traditions and cultural practices. The study of
-              vernacular architecture does not examine formally schooled
-              architects, but instead that of the design skills and tradition of
-              local builders, who were rarely given any attribution for the
-              work. More recently, vernacular architecture has been examined by
-              designers and the building industry in an effort to be more energy
-              conscious with contemporary design and construction—part of a
-              broader interest in sustainable design.
-            </p>
-            <p>
-              This type of architecture usually serves immediate, local needs,
-              is constrained by the materials available in its particular region
-              and reflects local traditions and cultural practices. The study of
-              vernacular architecture does not examine formally schooled
-              architects, but instead that of the design skills and tradition of
-              local builders, who were rarely given any attribution for the
-              work. More recently, vernacular architecture has been examined by
-              designers and the building industry in an effort to be more energy
-              conscious with contemporary design and construction—part of a
-              broader interest in sustainable design.
-            </p>
-            <p>
-              This type of architecture usually serves immediate, local needs,
-              is constrained by the materials available in its particular region
-              and reflects local traditions and cultural practices. The study of
-              vernacular architecture does not examine formally schooled
-              architects, but instead that of the design skills and tradition of
-              local builders, who were rarely given any attribution for the
-              work. More recently, vernacular architecture has been examined by
-              designers and the building industry in an effort to be more energy
-              conscious with contemporary design and construction—part of a
-              broader interest in sustainable design.
-            </p>
+            {Object.keys(sortBySpeed)
+              .reverse()
+              .map((speed) => (
+                <PokemonSpeedGroup
+                  key={`speed-group-${speed}`}
+                  speed={+speed}
+                  pokemon={sortBySpeed[+speed]}
+                />
+              ))}
           </ScrollArea.Content>
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar

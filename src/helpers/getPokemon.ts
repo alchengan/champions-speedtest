@@ -1,5 +1,5 @@
 import pokemon from "../data/pokemonSpeeds.json";
-import { GetAbilitySpeedModifier } from "./abilitySpeed";
+// import pokemon from "../data/testSpeeds.json";
 
 export type PokemonSpeed = {
   name: string;

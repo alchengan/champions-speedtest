@@ -21,6 +21,8 @@ import {
   PokemonSpeed,
   PokemonTesteeOption,
 } from "../helpers/getPokemon";
+import { GetAbilitySpeedModifier } from "../helpers/abilitySpeed";
+import SpeedModifierOptions from "./SpeedModifierOptions";
 
 export default function PokemonBuild() {
   const [testeePokemon, setTesteePokemon] = useState<PokemonSpeed>();
@@ -60,19 +62,9 @@ export default function PokemonBuild() {
     // ability
     //  x2: chlorophyll, sand rush, slush rush, surge surfer, swift swim, unburden
     //  x1.5: protosynthesis, quark drive, quick feet
-    const abilityModifier = [
-      "Chlorophyll",
-      "Sand Rush",
-      "Slush Rush",
-      "Surge Surfer",
-      "Swift Swim",
-      "Unburden",
-    ].includes(abilityMod)
-      ? 2
-      : ["Protosynthesis", "Quark Drive", "Quick Feet"].includes(abilityMod)
-        ? 1.5
-        : 1;
-    const abilityModSpeed = Math.floor(tailwindSpeed * abilityModifier);
+    const abilityModSpeed = Math.floor(
+      tailwindSpeed * GetAbilitySpeedModifier(abilityMod),
+    );
 
     // choice scarf
     const choiceScarfSpeed = isChoiceScarf
@@ -162,10 +154,7 @@ export default function PokemonBuild() {
     }
   };
 
-  const handleEVFieldChange = (
-    newValue: number | null,
-    e: NumberFieldRootChangeEventDetails,
-  ) => {
+  const handleEVFieldChange = (newValue: number | null, e: any) => {
     if (newValue) {
       setEvPoints(newValue);
     }
@@ -206,126 +195,49 @@ export default function PokemonBuild() {
   return (
     <>
       <FormControl fullWidth>
-        <div>
-          <div className="flex gap-x-6">
-            <div className="grid">
-              <Autocomplete
-                disablePortal
-                options={pokemonList}
-                renderInput={(params) => (
-                  <TextField {...params} label="Choose Pokémon" />
-                )}
-                onChange={handlePokemonChange}
-              />
-              <img
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${testeePokemon?.pokeApiId}.png`}
-                className="w-48 py-4"
-              />
-            </div>
-            <div className="grid content-between justify-items-start gap-y-2">
-              <div className="grid justify-items-start">
-                <p>{`Base Speed: ${baseSpeed === 0 ? "-" : baseSpeed}`}</p>
-              </div>
-              <div className="grid">
-                <p className="text-2xl font-bold">Speed</p>
-                <p className="text-8xl font-bold pb-4">
-                  {baseSpeed === 0 ? "-" : speedStat}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="flex gap-x-6">
-            <NumberField
-              label="Stat Points"
-              value={evPoints}
-              step={1}
-              min={0}
-              max={32}
-              size="small"
-              onValueChange={handleEVFieldChange}
+        <div className="flex gap-x-6">
+          <div className="grid w-1/2">
+            <Autocomplete
+              disablePortal
+              options={pokemonList}
+              renderInput={(params) => (
+                <TextField {...params} label="Choose Pokémon" />
+              )}
+              onChange={handlePokemonChange}
             />
-            <Slider
-              aria-label="Stat Points"
-              value={evPoints}
-              shiftStep={1}
-              step={1}
-              min={0}
-              max={32}
-              onChange={handleEVPointsChange}
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${testeePokemon?.pokeApiId}.png`}
+              className="w-48 py-4"
             />
           </div>
+          <div className="grid w-1/2 gap-y-2">
+            <p className="justify-self-start self-baseline mt-3 text-xl font-bold">{`Base Speed: ${baseSpeed === 0 ? "-" : baseSpeed}`}</p>
+            <div className="grid justify-self-center-safe">
+              <p className="text-2xl font-bold">Speed</p>
+              <p className="text-8xl font-bold pb-4">
+                {baseSpeed === 0 ? "-" : speedStat}
+              </p>
+            </div>
+          </div>
         </div>
-        <FormGroup row className="gap-6">
-          <FormLabel className="mt-2">Nature</FormLabel>
-          <RadioGroup
-            name="nature-mod"
-            value={natureMod}
-            onChange={handleNatureModChange}
-            row
-            className="justify-between gap-4"
-          >
-            <FormControlLabel value="negative" control={<Radio />} label="-" />
-            <FormControlLabel value="neutral" control={<Radio />} label="o" />
-            <FormControlLabel value="positive" control={<Radio />} label="+" />
-          </RadioGroup>
-        </FormGroup>
-        <FormGroup row className="gap-6">
-          {testeePokemon?.abilities &&
-            testeePokemon.abilities.map((ability) => (
-              <FormControlLabel
-                key={`${ability}-checkbox`}
-                value={ability}
-                control={
-                  <Checkbox
-                    checked={abilityMod === ability}
-                    onChange={handleAbilityChange}
-                  />
-                }
-                label={ability}
-              />
-            ))}
-        </FormGroup>
-        <div>
-          <FormLabel>Stat Modifiers</FormLabel>
-          <Slider
-            aria-label="Stat Modifiers"
-            value={statMods}
-            onChange={handleStatModsChange}
-            valueLabelDisplay="auto"
-            shiftStep={1}
-            step={1}
-            marks={statModMarks}
-            min={-6}
-            max={6}
-            track={false}
-          />
-        </div>
-        <FormGroup row className="justify-between">
-          <FormControlLabel
-            control={
-              <Checkbox checked={isTailwind} onChange={handleTailwindChange} />
-            }
-            label="Tailwind"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isChoiceScarf}
-                onChange={handleChoiceScarfChange}
-              />
-            }
-            label="Choice Scarf"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={isParalyzed}
-                onChange={handleParalyzedChange}
-              />
-            }
-            label="Paralyzed"
-          />
-        </FormGroup>
+        <SpeedModifierOptions
+          testeePokemon={testeePokemon}
+          evPoints={evPoints}
+          natureMod={natureMod}
+          abilityMod={abilityMod}
+          statMods={statMods}
+          isTailwind={isTailwind}
+          isChoiceScarf={isChoiceScarf}
+          isParalyzed={isParalyzed}
+          handleEVFieldChange={handleEVFieldChange}
+          handleEVPointsChange={handleEVPointsChange}
+          handleNatureModChange={handleNatureModChange}
+          handleAbilityChange={handleAbilityChange}
+          handleStatModsChange={handleStatModsChange}
+          handleTailwindChange={handleTailwindChange}
+          handleChoiceScarfChange={handleChoiceScarfChange}
+          handleParalyzedChange={handleParalyzedChange}
+        />
       </FormControl>
     </>
   );

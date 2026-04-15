@@ -1,4 +1,5 @@
 import pokemon from "../data/pokemonSpeeds.json";
+import { GetAbilitySpeedModifier } from "./abilitySpeed";
 
 export type PokemonSpeed = {
   name: string;
@@ -7,10 +8,46 @@ export type PokemonSpeed = {
   pokeApiId: number;
 };
 
+export type PokemonSpeedWithAbility = {
+  name: string;
+  speed: number;
+  ability?: string;
+  pokeApiId: number;
+};
+
 export type PokemonTesteeOption = {
   label: string;
   pokemon: PokemonSpeed;
 };
+
+export function GetPokemonSpeeds(): PokemonSpeed[] {
+  return pokemon;
+}
+
+export function GetPokemonSpeedsWithAbilities(): PokemonSpeedWithAbility[] {
+  const pokemonSpeeds = GetPokemonSpeeds();
+
+  const pokemonSpeedsWithAbilities: PokemonSpeedWithAbility[] =
+    pokemonSpeeds.map((pokemon) => ({
+      name: pokemon.name,
+      speed: pokemon.speed,
+      pokeApiId: pokemon.pokeApiId,
+    }));
+  pokemonSpeeds.forEach((pokemon) => {
+    if (pokemon.abilities) {
+      pokemon.abilities.forEach((ability) => {
+        pokemonSpeedsWithAbilities.push({
+          name: pokemon.name + " w/ " + ability,
+          speed: pokemon.speed,
+          ability: ability,
+          pokeApiId: pokemon.pokeApiId,
+        });
+      });
+    }
+  });
+
+  return pokemonSpeedsWithAbilities;
+}
 
 export function GetPokemonTesteeOptions(): PokemonTesteeOption[] {
   const options: PokemonTesteeOption[] = pokemon.map((pokemonObject) => ({

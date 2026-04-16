@@ -8,14 +8,21 @@ import SpeedModifierOptions from "./SpeedModifierOptions";
 import { FormControl } from "@mui/material";
 import PokemonSpeedGroup from "./PokemonSpeedGroup";
 import { CalculateSpeed } from "../helpers/speedFunctions";
-
-type PokemonSpeedGroups = { [speed: number]: PokemonSpeedWithAbility[] };
+import { FindPokemonInList } from "../helpers/checkMonVisibility";
+import PokemonSpeedList from "./PokemonSpeedLIst";
+import { alphaSortPokemonSpeeds } from "../helpers/otherHelpers";
 
 interface PokemonSpeedsProps {
   userPokemon?: PokemonSpeedWithAbility;
 }
 
 export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
+  const [fasterPokemon, setFasterPokemon] = useState<PokemonSpeedWithAbility[]>(
+    [],
+  );
+  const [slowerPokemon, setSlowerPokemon] = useState<PokemonSpeedWithAbility[]>(
+    [],
+  );
   const [evPoints, setEvPoints] = useState(0);
   const [natureMod, setNatureMod] = useState<string>("neutral");
   const [statMods, setStatMods] = useState(0);
@@ -35,15 +42,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   const sortByAlpha = userPokemon
     ? [...GetPokemonSpeedsWithAbilities(), userPokemon]
     : [...GetPokemonSpeedsWithAbilities()];
-  sortByAlpha.sort((a: PokemonSpeedWithAbility, b: PokemonSpeedWithAbility) => {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  });
+  sortByAlpha.sort(alphaSortPokemonSpeeds);
 
   // calculate effective speeds
   const sortByAlphaCalculatedSpeeds = sortByAlpha.map((pokemon) => ({
@@ -62,16 +61,21 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
         ),
   }));
 
-  const sortBySpeed = sortByAlphaCalculatedSpeeds.reduce(
-    (map: PokemonSpeedGroups, poke: PokemonSpeedWithAbility) => {
-      if (!(poke.speed in map)) {
-        map[poke.speed] = [];
-      }
-      map[poke.speed].push(poke);
-      return map;
-    },
-    {} as PokemonSpeedGroups,
-  );
+  fasterPokemon.sort(alphaSortPokemonSpeeds);
+  slowerPokemon.sort(alphaSortPokemonSpeeds);
+
+  const handleListScroll = (e: any) => {
+    if (!userPokemon) return;
+    const userMonPosition = FindPokemonInList();
+    const abovePokemon: PokemonSpeedWithAbility[] = [];
+    const belowPokemon: PokemonSpeedWithAbility[] = [];
+
+    if (userMonPosition === 1) abovePokemon.push(userPokemon);
+    if (userMonPosition === -1) belowPokemon.push(userPokemon);
+
+    setFasterPokemon(abovePokemon);
+    setSlowerPokemon(belowPokemon);
+  };
 
   const handleEVFieldChange = (newValue: number | null, e: any) => {
     if (newValue) {
@@ -106,19 +110,21 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   return (
     <div className="flex h-full gap-x-6">
       <div className="w-1/2 h-full grid grid-rows-5">
-        <div className="row-span-1 border-2"></div>
-        <ScrollArea.Root className={"row-span-3"}>
-          <ScrollArea.Viewport className={"h-full border-r-1"}>
+        <div className="relative row-span-1 border-2 mr-6">
+          <div className="absolute w-full bottom-0">
+            <PokemonSpeedList pokemonList={fasterPokemon} bottomElements />
+          </div>
+        </div>
+        <ScrollArea.Root id="speed-list" className={"row-span-3"}>
+          <ScrollArea.Viewport
+            className={"h-full border-r-1"}
+            onScroll={handleListScroll}
+          >
             <ScrollArea.Content className={"mr-6"}>
-              {Object.keys(sortBySpeed)
-                .reverse()
-                .map((speed) => (
-                  <PokemonSpeedGroup
-                    key={`speed-group-${speed}`}
-                    speed={+speed}
-                    pokemon={sortBySpeed[+speed]}
-                  />
-                ))}
+              <PokemonSpeedList
+                pokemonList={sortByAlphaCalculatedSpeeds}
+                mainList={true}
+              />
             </ScrollArea.Content>
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar
@@ -128,7 +134,9 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
-        <div className="row-span-1 border-2"></div>
+        <div className="row-span-1 border-2 mr-6">
+          <PokemonSpeedList pokemonList={slowerPokemon} />
+        </div>
       </div>
       <div className="w-1/2">
         <FormControl fullWidth>

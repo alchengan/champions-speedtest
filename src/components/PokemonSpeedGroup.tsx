@@ -4,11 +4,13 @@ import PokemonSpeedGroupItem from "./PokemonSpeedGroupItem";
 interface PokemonSpeedGroupProps {
   speed: number;
   pokemon: PokemonSpeedWithAbility[];
+  mainList: boolean;
 }
 
 export default function PokemonSpeedGroup({
   speed,
   pokemon,
+  mainList,
 }: PokemonSpeedGroupProps) {
   return (
     <div className="border-b-2">
@@ -18,6 +20,7 @@ export default function PokemonSpeedGroup({
             <PokemonSpeedGroupItem
               key={`pokemon-${poke.name}${poke.user && "-user"}`}
               pokemon={poke}
+              mainList={mainList}
             />
           ))}
         </div>

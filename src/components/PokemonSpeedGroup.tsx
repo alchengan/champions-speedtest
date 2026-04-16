@@ -24,7 +24,9 @@ export default function PokemonSpeedGroup({
             />
           ))}
         </div>
-        <p className="w-10 pr-2 text-lg font-bold">{speed}</p>
+        <p className={`w-10 pr-2 text-lg font-bold ${!mainList ? "mr-6" : ""}`}>
+          {speed}
+        </p>
       </div>
     </div>
   );

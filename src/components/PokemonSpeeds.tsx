@@ -110,7 +110,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   return (
     <div className="flex h-full gap-x-6">
       <div className="w-1/2 h-full grid grid-rows-5">
-        <div className="relative row-span-1 border-2 mr-6">
+        <div className="relative row-span-1 border-2">
           <div className="absolute w-full bottom-0">
             <PokemonSpeedList pokemonList={fasterPokemon} bottomElements />
           </div>
@@ -134,7 +134,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
-        <div className="row-span-1 border-2 mr-6">
+        <div className="row-span-1 border-2">
           <PokemonSpeedList pokemonList={slowerPokemon} />
         </div>
       </div>

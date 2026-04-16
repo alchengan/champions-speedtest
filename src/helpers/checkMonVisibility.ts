@@ -5,8 +5,6 @@ export function FindPokemonInList(): number {
     var userMonRect = userMonOnList.getBoundingClientRect();
     var listRect = speedList.getBoundingClientRect();
 
-    console.log(userMonRect.top, listRect.top);
-
     if (userMonRect.top < listRect.top) {
       return 1;
     }

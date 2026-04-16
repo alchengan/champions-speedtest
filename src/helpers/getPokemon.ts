@@ -12,6 +12,7 @@ export type PokemonSpeedWithAbility = {
   name: string;
   speed: number;
   ability?: string;
+  user: boolean;
   pokeApiId: number;
 };
 
@@ -31,6 +32,7 @@ export function GetPokemonSpeedsWithAbilities(): PokemonSpeedWithAbility[] {
     pokemonSpeeds.map((pokemon) => ({
       name: pokemon.name,
       speed: pokemon.speed,
+      user: false,
       pokeApiId: pokemon.pokeApiId,
     }));
   pokemonSpeeds.forEach((pokemon) => {
@@ -40,6 +42,7 @@ export function GetPokemonSpeedsWithAbilities(): PokemonSpeedWithAbility[] {
           name: pokemon.name + " w/ " + ability,
           speed: pokemon.speed,
           ability: ability,
+          user: false,
           pokeApiId: pokemon.pokeApiId,
         });
       });

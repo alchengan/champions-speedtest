@@ -2,22 +2,31 @@ import { Card, CardContent, Grid } from "@mui/material";
 import PokemonBuild from "./PokemonBuild";
 import PokemonSpeeds from "./PokemonSpeeds";
 import { useEffect, useState } from "react";
-
-export type UserPokemon = {
-  name: string;
-  speed: number;
-};
+import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 
 export default function PokemonSpeedTest() {
-  const [userPokemon, setUserPokemon] = useState<UserPokemon>();
-
-  const handleUserPokemonChange = (name: string, speed: number) => {
-    setUserPokemon({ name: name, speed: speed });
-  };
+  const [userPokemon, setUserPokemon] = useState<PokemonSpeedWithAbility>();
 
   useEffect(() => {
-    userPokemon && console.log(userPokemon);
+    const userMonOnList = document.getElementsByClassName("user-mon");
+    userMonOnList?.item(0)?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   }, [userPokemon]);
+
+  const handleUserPokemonChange = (
+    name: string,
+    speed: number,
+    pokeApiId: number,
+  ) => {
+    setUserPokemon({
+      name: name,
+      speed: speed,
+      user: true,
+      pokeApiId: pokeApiId,
+    });
+  };
 
   return (
     <div className="p-4">
@@ -32,7 +41,7 @@ export default function PokemonSpeedTest() {
         <Grid size={8}>
           <Card className="p-2 h-[calc(100vh-32px)]">
             <CardContent className="h-full">
-              <PokemonSpeeds />
+              <PokemonSpeeds userPokemon={userPokemon} />
             </CardContent>
           </Card>
         </Grid>

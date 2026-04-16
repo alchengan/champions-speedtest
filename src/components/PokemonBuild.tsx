@@ -9,10 +9,13 @@ import {
 } from "../helpers/getPokemon";
 import { CalculateSpeed } from "../helpers/speedFunctions";
 import SpeedModifierOptions from "./SpeedModifierOptions";
-import { UserPokemon } from "./PokemonSpeedTest";
 
 interface PokemonBuildProps {
-  handleUserPokemonChange: (name: string, speed: number) => void;
+  handleUserPokemonChange: (
+    name: string,
+    speed: number,
+    pokeApiId: number,
+  ) => void;
 }
 
 export default function PokemonBuild({
@@ -65,7 +68,12 @@ export default function PokemonBuild({
 
   // update user pokemon
   useEffect(() => {
-    testeePokemon && handleUserPokemonChange(testeePokemon.name, speedStat);
+    testeePokemon &&
+      handleUserPokemonChange(
+        testeePokemon.name,
+        speedStat,
+        testeePokemon.pokeApiId,
+      );
   }, [speedStat]);
 
   const pokemonList = GetPokemonTesteeOptions();

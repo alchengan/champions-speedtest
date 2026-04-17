@@ -23,9 +23,15 @@ export default function PokemonSpeedGroupItem({
     }
   };
 
+  const bgColor = pokemon.user
+    ? "bg-green-300 hover:bg-green-400"
+    : pokemon.pin
+      ? "bg-yellow-400 hover:bg-yellow-500"
+      : "hover:bg-slate-300";
+
   return (
     <div
-      className={`flex gap-2 pl-2 transition-colors duration-100 ease-in-out ${pokemon.user ? " bg-green-300 hover:bg-green-400" : " hover:bg-slate-300"}${mainList && pokemon.user ? " user-mon" : ""}`}
+      className={`flex gap-2 pl-2 transition-colors duration-100 ease-in-out ${bgColor} ${mainList && pokemon.user ? "user-mon" : ""}`}
     >
       <div className="size-6">
         {pokemon.user && <PokeballIcon />}

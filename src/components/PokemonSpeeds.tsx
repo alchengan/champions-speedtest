@@ -43,31 +43,53 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
     });
   }, [evPoints, natureMod, statMods, isTailwind, isChoiceScarf, isParalyzed]);
 
-  // add pinned pokemon into list, filtering out any that are already on list
-
-  // sort pokemon by name and then by speed
-  const sortByAlpha = userPokemon
+  const everyPokemon = userPokemon
     ? [...GetPokemonSpeedsWithAbilities(), userPokemon]
     : [...GetPokemonSpeedsWithAbilities()];
-  sortByAlpha.sort(alphaSortPokemonSpeeds);
 
   // calculate effective speeds
-  const sortByAlphaCalculatedSpeeds = sortByAlpha.map((pokemon) => ({
-    ...pokemon,
-    speed: pokemon.user
-      ? pokemon.speed
-      : CalculateSpeed(
-          pokemon.speed,
-          evPoints,
-          natureMod,
-          pokemon.ability ? pokemon.ability : "",
-          statMods,
-          isTailwind,
-          isChoiceScarf,
-          isParalyzed,
-        ),
-  }));
+  const everyPokemonCalculatedSpeeds: PokemonSpeedWithAbility[] =
+    everyPokemon.map((pokemon) => ({
+      ...pokemon,
+      speed: pokemon.user
+        ? pokemon.speed
+        : CalculateSpeed(
+            pokemon.speed,
+            evPoints,
+            natureMod,
+            pokemon.ability ? pokemon.ability : "",
+            statMods,
+            isTailwind,
+            isChoiceScarf,
+            isParalyzed,
+          ),
+    }));
 
+  // add pinned pokemon into list, filtering out any that are already on list
+  pinnedPokemon.forEach((pokemon) => {
+    if (!pokemon.mods) return;
+
+    if (
+      pokemon.mods.statPoints === evPoints &&
+      pokemon.mods.nature === natureMod &&
+      pokemon.mods.statChanges === statMods &&
+      pokemon.mods.tailwind === isTailwind &&
+      pokemon.mods.choiceScarf === isChoiceScarf &&
+      pokemon.mods.paralyzed === isParalyzed
+    ) {
+      const foundPinnedPokemon = everyPokemonCalculatedSpeeds.findIndex(
+        (poke) =>
+          pokemon.name === poke.name &&
+          pokemon.speed === poke.speed &&
+          !poke.user,
+      );
+      everyPokemonCalculatedSpeeds.splice(foundPinnedPokemon, 1);
+    }
+
+    everyPokemonCalculatedSpeeds.push(pokemon);
+  });
+
+  everyPokemonCalculatedSpeeds.sort(alphaSortPokemonSpeeds);
   fasterPokemon.sort(alphaSortPokemonSpeeds);
   slowerPokemon.sort(alphaSortPokemonSpeeds);
 
@@ -164,7 +186,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
           >
             <ScrollArea.Content className={"mr-6"}>
               <PokemonSpeedList
-                pokemonList={sortByAlphaCalculatedSpeeds}
+                pokemonList={everyPokemonCalculatedSpeeds}
                 mainList={true}
                 pinPokemon={pinPokemon}
                 unpinPokemon={unpinPokemon}
@@ -187,7 +209,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
         </div>
       </div>
       <div className="w-1/2">
-        <div className="gap-4">
+        <div className="grid gap-4">
           <FormControl fullWidth>
             <SpeedModifierOptions
               evPoints={evPoints}
@@ -205,13 +227,14 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
               handleParalyzedChange={handleParalyzedChange}
             />
           </FormControl>
-        </div>
-        <div className="border-2">
-          <PokemonSpeedList
-            pokemonList={pinnedPokemon}
-            pinPokemon={pinPokemon}
-            unpinPokemon={unpinPokemon}
-          />
+          <div className="border-2">
+            <p className="text-xl font-bold">Pins</p>
+            <PokemonSpeedList
+              pokemonList={pinnedPokemon}
+              pinPokemon={pinPokemon}
+              unpinPokemon={unpinPokemon}
+            />
+          </div>
         </div>
       </div>
     </div>

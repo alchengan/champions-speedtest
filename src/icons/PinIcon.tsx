@@ -6,6 +6,7 @@ interface PinIconProps {
 export default function PinIcon({ isPinned, handlePin }: PinIconProps) {
   const handleOnClick = (e: any) => {
     handlePin();
+    e.stopPropagation();
   };
 
   return (

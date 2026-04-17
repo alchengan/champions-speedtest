@@ -43,6 +43,10 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
     });
   }, [evPoints, natureMod, statMods, isTailwind, isChoiceScarf, isParalyzed]);
 
+  useEffect(() => {
+    updateOutOfViewPokemon();
+  }, [pinnedPokemon]);
+
   const everyPokemon = userPokemon
     ? [...GetPokemonSpeedsWithAbilities(), userPokemon]
     : [...GetPokemonSpeedsWithAbilities()];
@@ -123,17 +127,26 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
     }
   };
 
-  const handleListScroll = (e: any) => {
-    if (!userPokemon) return;
-    const userMonPosition = FindPokemonInList();
+  const updateOutOfViewPokemon = () => {
+    const userAndPinnedMods = userPokemon
+      ? [...pinnedPokemon, userPokemon]
+      : pinnedPokemon;
     const abovePokemon: PokemonSpeedWithAbility[] = [];
     const belowPokemon: PokemonSpeedWithAbility[] = [];
 
-    if (userMonPosition === 1) abovePokemon.push(userPokemon);
-    if (userMonPosition === -1) belowPokemon.push(userPokemon);
+    userAndPinnedMods.forEach((pokemon) => {
+      const pokemonPosition = FindPokemonInList(pokemon);
+      if (pokemonPosition === 1) abovePokemon.push(pokemon);
+      if (pokemonPosition === -1) belowPokemon.push(pokemon);
+      // else pokemon is visible on main list
+    });
 
     setFasterPokemon(abovePokemon);
     setSlowerPokemon(belowPokemon);
+  };
+
+  const handleListScroll = (e: any) => {
+    updateOutOfViewPokemon();
   };
 
   const handleEVFieldChange = (newValue: number | null, e: any) => {
@@ -187,7 +200,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
             <ScrollArea.Content className={"mr-6"}>
               <PokemonSpeedList
                 pokemonList={everyPokemonCalculatedSpeeds}
-                mainList={true}
+                mainList
                 pinPokemon={pinPokemon}
                 unpinPokemon={unpinPokemon}
               />

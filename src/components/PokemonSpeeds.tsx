@@ -9,7 +9,7 @@ import { FormControl } from "@mui/material";
 import PokemonSpeedGroup from "./PokemonSpeedGroup";
 import { CalculateSpeed } from "../helpers/speedFunctions";
 import { FindPokemonInList } from "../helpers/checkMonVisibility";
-import PokemonSpeedList from "./PokemonSpeedLIst";
+import PokemonSpeedList from "./PokemonSpeedList";
 import { alphaSortPokemonSpeeds } from "../helpers/otherHelpers";
 
 interface PokemonSpeedsProps {
@@ -23,6 +23,10 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   const [slowerPokemon, setSlowerPokemon] = useState<PokemonSpeedWithAbility[]>(
     [],
   );
+  const [pinnedPokemon, setPinnedPokemon] = useState<PokemonSpeedWithAbility[]>(
+    [],
+  );
+
   const [evPoints, setEvPoints] = useState(0);
   const [natureMod, setNatureMod] = useState<string>("neutral");
   const [statMods, setStatMods] = useState(0);
@@ -30,6 +34,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
   const [isParalyzed, setIsParalyzed] = useState(false);
 
+  // keep user mon in view when changing list stats
   useEffect(() => {
     const userMonOnList = document.getElementsByClassName("user-mon");
     userMonOnList?.item(0)?.scrollIntoView({
@@ -37,6 +42,8 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
       block: "center",
     });
   }, [evPoints, natureMod, statMods, isTailwind, isChoiceScarf, isParalyzed]);
+
+  // add pinned pokemon into list, filtering out any that are already on list
 
   // sort pokemon by name and then by speed
   const sortByAlpha = userPokemon
@@ -63,6 +70,36 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
 
   fasterPokemon.sort(alphaSortPokemonSpeeds);
   slowerPokemon.sort(alphaSortPokemonSpeeds);
+
+  const pinPokemon = (pokemon: PokemonSpeedWithAbility) => {
+    const _pinnedPokemon = [...pinnedPokemon];
+    const pokemonToPin = {
+      ...pokemon,
+      pin: true,
+      mods: {
+        statPoints: evPoints,
+        nature: natureMod,
+        statChanges: statMods,
+        tailwind: isTailwind,
+        choiceScarf: isChoiceScarf,
+        paralyzed: isParalyzed,
+      },
+    };
+
+    if (!_pinnedPokemon.includes(pokemonToPin)) {
+      _pinnedPokemon.push(pokemonToPin);
+      setPinnedPokemon(_pinnedPokemon);
+    }
+  };
+
+  const unpinPokemon = (pokemon: PokemonSpeedWithAbility) => {
+    const _pinnedPokemon = [...pinnedPokemon];
+    const index = _pinnedPokemon.indexOf(pokemon);
+    if (index > -1) {
+      _pinnedPokemon.splice(index, 1);
+      setPinnedPokemon(_pinnedPokemon);
+    }
+  };
 
   const handleListScroll = (e: any) => {
     if (!userPokemon) return;
@@ -112,7 +149,12 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
       <div className="w-1/2 h-full grid grid-rows-5">
         <div className="relative row-span-1 border-2">
           <div className="absolute w-full bottom-0">
-            <PokemonSpeedList pokemonList={fasterPokemon} bottomElements />
+            <PokemonSpeedList
+              pokemonList={fasterPokemon}
+              bottomElements
+              pinPokemon={pinPokemon}
+              unpinPokemon={unpinPokemon}
+            />
           </div>
         </div>
         <ScrollArea.Root id="speed-list" className={"row-span-3"}>
@@ -124,6 +166,8 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
               <PokemonSpeedList
                 pokemonList={sortByAlphaCalculatedSpeeds}
                 mainList={true}
+                pinPokemon={pinPokemon}
+                unpinPokemon={unpinPokemon}
               />
             </ScrollArea.Content>
           </ScrollArea.Viewport>
@@ -135,27 +179,40 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
           <ScrollArea.Corner />
         </ScrollArea.Root>
         <div className="row-span-1 border-2">
-          <PokemonSpeedList pokemonList={slowerPokemon} />
+          <PokemonSpeedList
+            pokemonList={slowerPokemon}
+            pinPokemon={pinPokemon}
+            unpinPokemon={unpinPokemon}
+          />
         </div>
       </div>
       <div className="w-1/2">
-        <FormControl fullWidth>
-          <SpeedModifierOptions
-            evPoints={evPoints}
-            natureMod={natureMod}
-            statMods={statMods}
-            isTailwind={isTailwind}
-            isChoiceScarf={isChoiceScarf}
-            isParalyzed={isParalyzed}
-            handleEVFieldChange={handleEVFieldChange}
-            handleEVPointsChange={handleEVPointsChange}
-            handleNatureModChange={handleNatureModChange}
-            handleStatModsChange={handleStatModsChange}
-            handleTailwindChange={handleTailwindChange}
-            handleChoiceScarfChange={handleChoiceScarfChange}
-            handleParalyzedChange={handleParalyzedChange}
+        <div className="gap-4">
+          <FormControl fullWidth>
+            <SpeedModifierOptions
+              evPoints={evPoints}
+              natureMod={natureMod}
+              statMods={statMods}
+              isTailwind={isTailwind}
+              isChoiceScarf={isChoiceScarf}
+              isParalyzed={isParalyzed}
+              handleEVFieldChange={handleEVFieldChange}
+              handleEVPointsChange={handleEVPointsChange}
+              handleNatureModChange={handleNatureModChange}
+              handleStatModsChange={handleStatModsChange}
+              handleTailwindChange={handleTailwindChange}
+              handleChoiceScarfChange={handleChoiceScarfChange}
+              handleParalyzedChange={handleParalyzedChange}
+            />
+          </FormControl>
+        </div>
+        <div className="border-2">
+          <PokemonSpeedList
+            pokemonList={pinnedPokemon}
+            pinPokemon={pinPokemon}
+            unpinPokemon={unpinPokemon}
           />
-        </FormControl>
+        </div>
       </div>
     </div>
   );

@@ -7,11 +7,15 @@ interface PokemonSpeedListProps {
   pokemonList: PokemonSpeedWithAbility[];
   mainList?: boolean;
   bottomElements?: boolean;
+  pinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
+  unpinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
 }
 
 export default function PokemonSpeedList({
   pokemonList,
   mainList,
+  pinPokemon,
+  unpinPokemon,
 }: PokemonSpeedListProps) {
   const sortBySpeed = pokemonList.reduce(
     (map: PokemonSpeedGroups, poke: PokemonSpeedWithAbility) => {
@@ -34,6 +38,8 @@ export default function PokemonSpeedList({
             speed={+speed}
             pokemon={sortBySpeed[+speed]}
             mainList={mainList || false}
+            pinPokemon={pinPokemon}
+            unpinPokemon={unpinPokemon}
           />
         ))}
     </>

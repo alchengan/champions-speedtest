@@ -13,6 +13,15 @@ export type PokemonSpeedWithAbility = {
   speed: number;
   ability?: string;
   user: boolean;
+  pin?: boolean;
+  mods?: {
+    statPoints: number;
+    nature: string;
+    statChanges: number;
+    tailwind: boolean;
+    choiceScarf: boolean;
+    paralyzed: boolean;
+  };
   pokeApiId: number;
 };
 
@@ -35,6 +44,8 @@ export function GetPokemonSpeedsWithAbilities(): PokemonSpeedWithAbility[] {
       user: false,
       pokeApiId: pokemon.pokeApiId,
     }));
+
+  // create separate instance of pokemon with speed changing ability
   pokemonSpeeds.forEach((pokemon) => {
     if (pokemon.abilities) {
       pokemon.abilities.forEach((ability) => {

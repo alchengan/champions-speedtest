@@ -7,6 +7,7 @@ import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 export default function PokemonSpeedTest() {
   const [userPokemon, setUserPokemon] = useState<PokemonSpeedWithAbility>();
 
+  // keep user mon in view when changing user mon stats
   useEffect(() => {
     const userMonOnList = document.getElementsByClassName("user-mon");
     userMonOnList?.item(0)?.scrollIntoView({

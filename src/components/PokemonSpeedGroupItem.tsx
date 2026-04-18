@@ -52,11 +52,11 @@ export default function PokemonSpeedGroupItem({
       : "hover:bg-slate-300";
 
   const elementClassIdentifier = mainList
-    ? pokemon.user
+    ? pokemon.user // user pokemon
       ? "user-mon"
-      : pokemon.pin && pokemon.mods
+      : pokemon.pin && pokemon.mods // pinned pokemon
         ? `pin-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`
-        : ""
+        : `search-mon-${pokemon.name.replace(/ /g, "-").toLowerCase()}` // non-user non-pinned searchable pokemon
     : "";
 
   return (

@@ -5,7 +5,7 @@ import {
 } from "../helpers/getPokemon";
 import { ChangeEvent, useEffect, useState } from "react";
 import SpeedModifierOptions from "./SpeedModifierOptions";
-import { FormControl } from "@mui/material";
+import { Autocomplete, FormControl, TextField } from "@mui/material";
 import PokemonSpeedGroup from "./PokemonSpeedGroup";
 import { CalculateSpeed } from "../helpers/speedFunctions";
 import { FindPokemonInList } from "../helpers/checkMonVisibility";
@@ -97,6 +97,11 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   fasterPokemon.sort(alphaSortPokemonSpeeds);
   slowerPokemon.sort(alphaSortPokemonSpeeds);
 
+  const searchPokemonOptions = everyPokemon.map((pokemon) => ({
+    label: pokemon.name,
+    name: pokemon.name,
+  }));
+
   const pinPokemon = (pokemon: PokemonSpeedWithAbility) => {
     const _pinnedPokemon = [...pinnedPokemon];
     const pokemonToPin = {
@@ -179,6 +184,20 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
     setIsParalyzed(e.target.checked);
   };
 
+  const handlePokemonSearch = (
+    e: any,
+    searchPokemon: { name: string } | null,
+  ) => {
+    if (!searchPokemon) return;
+    const searchPokemonOnList = document.getElementsByClassName(
+      `search-mon-${searchPokemon.name.replace(/ /g, "-").toLowerCase()}`,
+    );
+    searchPokemonOnList?.item(0)?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+
   return (
     <div className="flex h-full gap-x-6">
       <div className="w-1/2 h-full grid grid-rows-5">
@@ -222,6 +241,7 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
         </div>
       </div>
       <div className="w-1/2">
+        <p className="text-xl font-bold pb-4">Opposing Pokémon</p>
         <div className="grid gap-4">
           <FormControl fullWidth>
             <SpeedModifierOptions
@@ -240,6 +260,14 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
               handleParalyzedChange={handleParalyzedChange}
             />
           </FormControl>
+          <Autocomplete
+            disablePortal
+            options={searchPokemonOptions}
+            renderInput={(params) => (
+              <TextField {...params} label="Search Pokémon" />
+            )}
+            onChange={handlePokemonSearch}
+          />
           <div className="border-2">
             <p className="text-xl font-bold">Pins</p>
             <PokemonSpeedList

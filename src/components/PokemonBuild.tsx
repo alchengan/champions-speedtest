@@ -127,6 +127,8 @@ export default function PokemonBuild({
 
   return (
     <>
+      <p className="text-xl font-bold pb-4">Your Pokémon</p>
+
       <FormControl fullWidth>
         <div className="flex gap-x-6">
           <div className="grid w-1/2">

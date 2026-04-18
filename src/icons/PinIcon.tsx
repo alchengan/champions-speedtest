@@ -17,7 +17,7 @@ export default function PinIcon({ isPinned, handlePin }: PinIconProps) {
       viewBox="0 0 24 24"
       height="24"
       width="24"
-      className="hover:stroke-black"
+      className={`${isPinned ? "visible" : "invisible"} hover:stroke-black group-hover:visible`}
       onClick={handleOnClick}
     >
       <desc>Pin 1 Streamline Icon: https://streamlinehq.com</desc>

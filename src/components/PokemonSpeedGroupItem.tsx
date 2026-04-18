@@ -1,6 +1,8 @@
+import { useState, MouseEvent } from "react";
 import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 import PinIcon from "../icons/PinIcon";
 import PokeballIcon from "../icons/PokeballIcon";
+import { Popover } from "@mui/material";
 
 interface PokemonSpeedGroupItemProps {
   pokemon: PokemonSpeedWithAbility;
@@ -15,6 +17,8 @@ export default function PokemonSpeedGroupItem({
   pinPokemon,
   unpinPokemon,
 }: PokemonSpeedGroupItemProps) {
+  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null);
+
   const handlePin = () => {
     if (pokemon.pin) {
       unpinPokemon(pokemon);
@@ -45,6 +49,16 @@ export default function PokemonSpeedGroupItem({
     }
   };
 
+  const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {};
+
+  const handlePinPopoverOpen = (e: MouseEvent<HTMLElement>) => {
+    setPopoverAnchor(e.currentTarget);
+  };
+
+  const handlePinPopoverClose = () => {
+    setPopoverAnchor(null);
+  };
+
   const bgColor = pokemon.user
     ? "bg-green-300 hover:bg-green-400"
     : pokemon.pin
@@ -57,20 +71,52 @@ export default function PokemonSpeedGroupItem({
       : pokemon.pin && pokemon.mods // pinned pokemon
         ? `pin-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`
         : `search-mon-${pokemon.name.replace(/ /g, "-").toLowerCase()}` // non-user non-pinned searchable pokemon
-    : "";
+    : ""; // not in main list
 
   return (
-    <div
-      className={`flex gap-2 pl-2 transition-colors duration-100 ease-in-out ${bgColor} ${elementClassIdentifier}`}
-      onClick={handleOnClick}
-    >
-      <div className="size-6">
-        {pokemon.user && <PokeballIcon />}
-        {!pokemon.user && (
-          <PinIcon isPinned={pokemon.pin || false} handlePin={handlePin} />
-        )}
+    <div>
+      <div
+        className={`group flex gap-2 pl-2 transition-colors duration-100 ease-in-out ${bgColor} ${elementClassIdentifier}`}
+        onClick={handleOnClick}
+        onMouseEnter={handlePinPopoverOpen}
+        onMouseLeave={handlePinPopoverClose}
+      >
+        <div className="size-6">
+          {pokemon.user && <PokeballIcon />}
+          {!pokemon.user && (
+            <PinIcon isPinned={pokemon.pin || false} handlePin={handlePin} />
+          )}
+        </div>
+        <p>{pokemon.name}</p>
       </div>
-      <p>{pokemon.name}</p>
+      {pokemon.pin && pokemon.mods && (
+        <Popover
+          sx={{ pointerEvents: "none" }}
+          open={!!popoverAnchor}
+          anchorEl={popoverAnchor}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          transformOrigin={{ vertical: "bottom", horizontal: "center" }}
+          onClose={handlePinPopoverClose}
+          disableRestoreFocus
+        >
+          <div className="p-2">
+            <p>{pokemon.name}</p>
+            <p>{pokemon.mods.statPoints} stat points</p>
+            {pokemon.mods.nature !== "neutral" && (
+              <p>{pokemon.mods.nature === "positive" ? "+" : "-"} nature</p>
+            )}
+            {pokemon.mods.statChanges !== 0 && (
+              <p>
+                {pokemon.mods.statChanges > 0 ? "+" : ""}
+                {pokemon.mods.statChanges}
+              </p>
+            )}
+            {pokemon.mods.tailwind && <p>Tailwind</p>}
+            {pokemon.mods.choiceScarf && <p>Choice Scarf</p>}
+            {pokemon.mods.paralyzed && <p>Paralyzed</p>}
+          </div>
+        </Popover>
+      )}
     </div>
   );
 }

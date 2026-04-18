@@ -22,7 +22,7 @@ export default function PokemonSpeedGroup({
         <div className="grow">
           {pokemon.map((poke) => (
             <PokemonSpeedGroupItem
-              key={`pokemon-${poke.name}${poke.user && "-user"}`}
+              key={`pokemon-${poke.name}${poke.user && "-user"}${poke.pin && "-pin"}`}
               pokemon={poke}
               mainList={mainList}
               pinPokemon={pinPokemon}

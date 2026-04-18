@@ -5,8 +5,10 @@ interface PokemonSpeedGroupProps {
   speed: number;
   pokemon: PokemonSpeedWithAbility[];
   mainList: boolean;
-  pinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
-  unpinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
+  pinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
+  unpinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
+  removePokemonFromTeam?: (pokemon: PokemonSpeedWithAbility) => void;
+  handleTeamPokemonClick?: (pokemon: PokemonSpeedWithAbility) => void;
 }
 
 export default function PokemonSpeedGroup({
@@ -15,6 +17,8 @@ export default function PokemonSpeedGroup({
   mainList,
   pinPokemon,
   unpinPokemon,
+  removePokemonFromTeam,
+  handleTeamPokemonClick,
 }: PokemonSpeedGroupProps) {
   return (
     <div className="border-b-2 last:border-0">
@@ -22,11 +26,13 @@ export default function PokemonSpeedGroup({
         <div className="grow">
           {pokemon.map((poke) => (
             <PokemonSpeedGroupItem
-              key={`pokemon-${poke.name}${poke.user && "-user"}${poke.pin && "-pin"}`}
+              key={`item-${poke.name}${poke.user ? "-user" : ""}${poke.team ? "-team" : ""}${poke.pin ? "-pin" : ""}`}
               pokemon={poke}
               mainList={mainList}
               pinPokemon={pinPokemon}
               unpinPokemon={unpinPokemon}
+              removePokemonFromTeam={removePokemonFromTeam}
+              handleTeamPokemonClick={handleTeamPokemonClick}
             />
           ))}
         </div>

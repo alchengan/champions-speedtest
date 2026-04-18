@@ -7,8 +7,10 @@ import { Popover } from "@mui/material";
 interface PokemonSpeedGroupItemProps {
   pokemon: PokemonSpeedWithAbility;
   mainList: boolean;
-  pinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
-  unpinPokemon: (pokemon: PokemonSpeedWithAbility) => void;
+  pinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
+  unpinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
+  removePokemonFromTeam?: (pokemon: PokemonSpeedWithAbility) => void;
+  handleTeamPokemonClick?: (pokemon: PokemonSpeedWithAbility) => void;
 }
 
 export default function PokemonSpeedGroupItem({
@@ -16,15 +18,24 @@ export default function PokemonSpeedGroupItem({
   mainList,
   pinPokemon,
   unpinPokemon,
+  removePokemonFromTeam,
+  handleTeamPokemonClick,
 }: PokemonSpeedGroupItemProps) {
   const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null);
 
   const handlePin = () => {
+    if (!pinPokemon || !unpinPokemon) return;
+
     if (pokemon.pin) {
       unpinPokemon(pokemon);
     } else {
       pinPokemon(pokemon);
     }
+  };
+
+  const handleRemoveFromTeam = () => {
+    if (!removePokemonFromTeam) return;
+    removePokemonFromTeam(pokemon);
   };
 
   const handleOnClick = () => {
@@ -38,6 +49,20 @@ export default function PokemonSpeedGroupItem({
       });
     }
 
+    if (pokemon.team && pokemon.mods) {
+      if (handleTeamPokemonClick) {
+        handleTeamPokemonClick(pokemon);
+      } else {
+        const teamMonOnList = document.getElementsByClassName(
+          `team-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`,
+        );
+        teamMonOnList?.item(0)?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+
     if (pokemon.pin && pokemon.mods) {
       const pinMonOnList = document.getElementsByClassName(
         `pin-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`,
@@ -48,8 +73,6 @@ export default function PokemonSpeedGroupItem({
       });
     }
   };
-
-  const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {};
 
   const handlePinPopoverOpen = (e: MouseEvent<HTMLElement>) => {
     setPopoverAnchor(e.currentTarget);
@@ -63,14 +86,18 @@ export default function PokemonSpeedGroupItem({
     ? "bg-green-300 hover:bg-green-400"
     : pokemon.pin
       ? "bg-yellow-400 hover:bg-yellow-500"
-      : "hover:bg-slate-300";
+      : pokemon.team
+        ? "bg-blue-300 hover:bg-blue-400"
+        : "hover:bg-slate-300";
 
   const elementClassIdentifier = mainList
     ? pokemon.user // user pokemon
       ? "user-mon"
       : pokemon.pin && pokemon.mods // pinned pokemon
         ? `pin-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`
-        : `search-mon-${pokemon.name.replace(/ /g, "-").toLowerCase()}` // non-user non-pinned searchable pokemon
+        : pokemon.team && pokemon.mods // team pokemon
+          ? `team-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`
+          : `search-mon-${pokemon.name.replace(/ /g, "-").toLowerCase()}` // non-user non-pinned searchable pokemon
     : ""; // not in main list
 
   return (
@@ -82,14 +109,16 @@ export default function PokemonSpeedGroupItem({
         onMouseLeave={handlePinPopoverClose}
       >
         <div className="size-6">
-          {pokemon.user && <PokeballIcon />}
-          {!pokemon.user && (
+          {(pokemon.user || pokemon.team) && (
+            <PokeballIcon handleRemoveFromTeam={handleRemoveFromTeam} />
+          )}
+          {!(pokemon.user || pokemon.team) && (
             <PinIcon isPinned={pokemon.pin || false} handlePin={handlePin} />
           )}
         </div>
         <p>{pokemon.name}</p>
       </div>
-      {pokemon.pin && pokemon.mods && (
+      {(pokemon.pin || pokemon.team) && pokemon.mods && (
         <Popover
           sx={{ pointerEvents: "none" }}
           open={!!popoverAnchor}

@@ -13,6 +13,7 @@ export type PokemonSpeedWithAbility = {
   speed: number;
   ability?: string;
   user: boolean;
+  team?: boolean;
   pin?: boolean;
   mods?: {
     statPoints: number;

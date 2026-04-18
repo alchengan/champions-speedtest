@@ -6,7 +6,6 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 import SpeedModifierOptions from "./SpeedModifierOptions";
 import { Autocomplete, FormControl, TextField } from "@mui/material";
-import PokemonSpeedGroup from "./PokemonSpeedGroup";
 import { CalculateSpeed } from "../helpers/speedFunctions";
 import { FindPokemonInList } from "../helpers/checkMonVisibility";
 import PokemonSpeedList from "./PokemonSpeedList";
@@ -14,9 +13,13 @@ import { alphaSortPokemonSpeeds } from "../helpers/otherHelpers";
 
 interface PokemonSpeedsProps {
   userPokemon?: PokemonSpeedWithAbility;
+  teamPokemon: PokemonSpeedWithAbility[];
 }
 
-export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
+export default function PokemonSpeeds({
+  userPokemon,
+  teamPokemon,
+}: PokemonSpeedsProps) {
   const [fasterPokemon, setFasterPokemon] = useState<PokemonSpeedWithAbility[]>(
     [],
   );
@@ -93,6 +96,13 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
     everyPokemonCalculatedSpeeds.push(pokemon);
   });
 
+  // add team pokemon into list
+  everyPokemonCalculatedSpeeds.splice(
+    everyPokemonCalculatedSpeeds.length,
+    0,
+    ...teamPokemon,
+  );
+
   everyPokemonCalculatedSpeeds.sort(alphaSortPokemonSpeeds);
   fasterPokemon.sort(alphaSortPokemonSpeeds);
   slowerPokemon.sort(alphaSortPokemonSpeeds);
@@ -133,13 +143,13 @@ export default function PokemonSpeeds({ userPokemon }: PokemonSpeedsProps) {
   };
 
   const updateOutOfViewPokemon = () => {
-    const userAndPinnedMods = userPokemon
-      ? [...pinnedPokemon, userPokemon]
-      : pinnedPokemon;
+    const userTeamPinnedMods = userPokemon
+      ? [...pinnedPokemon, ...teamPokemon, userPokemon]
+      : [...pinnedPokemon, ...teamPokemon];
     const abovePokemon: PokemonSpeedWithAbility[] = [];
     const belowPokemon: PokemonSpeedWithAbility[] = [];
 
-    userAndPinnedMods.forEach((pokemon) => {
+    userTeamPinnedMods.forEach((pokemon) => {
       const pokemonPosition = FindPokemonInList(pokemon);
       if (pokemonPosition === 1) abovePokemon.push(pokemon);
       if (pokemonPosition === -1) belowPokemon.push(pokemon);

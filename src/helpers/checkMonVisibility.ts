@@ -9,7 +9,13 @@ export function FindPokemonInList(pokemon: PokemonSpeedWithAbility): number {
             `pin-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`,
           )
           ?.item(0)
-      : null;
+      : pokemon.team && pokemon.mods
+        ? document
+            .getElementsByClassName(
+              `team-mon-${`${pokemon.name.replace(/ /g, "-")}-${pokemon.speed}-${pokemon.mods.statPoints}-${pokemon.mods.nature}-${pokemon.mods.statChanges}-${pokemon.mods.tailwind}-${pokemon.mods.choiceScarf}-${pokemon.mods.paralyzed}`.toLowerCase()}`,
+            )
+            ?.item(0)
+        : null;
   const speedList = document.getElementById("speed-list");
 
   if (pokemonOnList && speedList) {

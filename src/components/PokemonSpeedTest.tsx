@@ -6,6 +6,7 @@ import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 
 export default function PokemonSpeedTest() {
   const [userPokemon, setUserPokemon] = useState<PokemonSpeedWithAbility>();
+  const [teamPokemon, setTeamPokemon] = useState<PokemonSpeedWithAbility[]>([]);
 
   // keep user mon in view when changing user mon stats
   useEffect(() => {
@@ -29,20 +30,30 @@ export default function PokemonSpeedTest() {
     });
   };
 
+  const handleTeamPokemonChange = (teamPokemon: PokemonSpeedWithAbility[]) => {
+    setTeamPokemon(teamPokemon);
+  };
+
   return (
     <div className="p-4">
       <Grid container spacing={2}>
         <Grid size={4}>
           <Card className="p-2">
             <CardContent>
-              <PokemonBuild handleUserPokemonChange={handleUserPokemonChange} />
+              <PokemonBuild
+                handleUserPokemonChange={handleUserPokemonChange}
+                handleTeamPokemonChange={handleTeamPokemonChange}
+              />
             </CardContent>
           </Card>
         </Grid>
         <Grid size={8}>
           <Card className="p-2 h-[calc(100vh-32px)]">
             <CardContent className="h-full">
-              <PokemonSpeeds userPokemon={userPokemon} />
+              <PokemonSpeeds
+                userPokemon={userPokemon}
+                teamPokemon={teamPokemon}
+              />
             </CardContent>
           </Card>
         </Grid>

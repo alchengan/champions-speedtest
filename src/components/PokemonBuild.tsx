@@ -5,10 +5,13 @@ import Autocomplete from "@mui/material/Autocomplete";
 import {
   GetPokemonTesteeOptions,
   PokemonSpeed,
+  PokemonSpeedWithAbility,
   PokemonTesteeOption,
 } from "../helpers/getPokemon";
 import { CalculateSpeed } from "../helpers/speedFunctions";
 import SpeedModifierOptions from "./SpeedModifierOptions";
+import PokemonSpeedList from "./PokemonSpeedList";
+import { Button } from "@mui/material";
 
 interface PokemonBuildProps {
   handleUserPokemonChange: (
@@ -16,17 +19,22 @@ interface PokemonBuildProps {
     speed: number,
     pokeApiId: number,
   ) => void;
+  handleTeamPokemonChange: (teamPokemon: PokemonSpeedWithAbility[]) => void;
 }
 
 export default function PokemonBuild({
   handleUserPokemonChange,
+  handleTeamPokemonChange,
 }: PokemonBuildProps) {
+  const [pokemonOption, setPokemonOption] =
+    useState<PokemonTesteeOption | null>(null);
+
   const [testeePokemon, setTesteePokemon] = useState<PokemonSpeed>();
   const [baseSpeed, setBaseSpeed] = useState(0);
 
   const [evPoints, setEvPoints] = useState(0);
-  const [natureMod, setNatureMod] = useState<string>("neutral");
-  const [abilityMod, setAbilityMod] = useState<string>("");
+  const [natureMod, setNatureMod] = useState("neutral");
+  const [abilityMod, setAbilityMod] = useState("");
   const [statMods, setStatMods] = useState(0);
   const [isTailwind, setIsTailwind] = useState(false);
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
@@ -34,10 +42,20 @@ export default function PokemonBuild({
 
   const [speedStat, setSpeedStat] = useState(0);
 
+  const [teamPokemon, setTeamPokemon] = useState<PokemonSpeedWithAbility[]>([]);
+  const [abilityLimbo, setAbilityLimbo] = useState("");
+
+  useEffect(() => {
+    if (pokemonOption) {
+      setTesteePokemon(pokemonOption.pokemon);
+    }
+  }, [pokemonOption]);
+
   // when new pokemon is selected
   useEffect(() => {
     setBaseSpeed(testeePokemon ? testeePokemon.speed : 0);
-    setAbilityMod("");
+    setAbilityMod(abilityLimbo);
+    setAbilityLimbo("");
   }, [testeePokemon]);
 
   // when any changes to stats are made
@@ -74,7 +92,12 @@ export default function PokemonBuild({
         speedStat,
         testeePokemon.pokeApiId,
       );
-  }, [speedStat]);
+  }, [speedStat, testeePokemon]);
+
+  // send team pokemon to main list
+  useEffect(() => {
+    handleTeamPokemonChange(teamPokemon);
+  }, [teamPokemon]);
 
   const pokemonList = GetPokemonTesteeOptions();
 
@@ -83,7 +106,7 @@ export default function PokemonBuild({
     newPokemon: PokemonTesteeOption | null,
   ) => {
     if (newPokemon) {
-      setTesteePokemon(newPokemon.pokemon);
+      setPokemonOption(newPokemon);
     }
   };
 
@@ -125,15 +148,95 @@ export default function PokemonBuild({
     setIsParalyzed(e.target.checked);
   };
 
-  return (
-    <>
-      <p className="text-xl font-bold pb-4">Your Pokémon</p>
+  const handleAddToTeam = () => {
+    if (!testeePokemon) return;
 
+    const _teamPokemon = [...teamPokemon];
+    const pokemonToAdd = {
+      name:
+        abilityMod === ""
+          ? testeePokemon.name
+          : testeePokemon.name + " w/ " + abilityMod,
+      speed: CalculateSpeed(
+        baseSpeed,
+        evPoints,
+        natureMod,
+        abilityMod,
+        statMods,
+        isTailwind,
+        isChoiceScarf,
+        isParalyzed,
+      ),
+      ...(abilityMod !== "" && { ability: abilityMod }),
+      user: false,
+      team: true,
+      mods: {
+        statPoints: evPoints,
+        nature: natureMod,
+        statChanges: statMods,
+        tailwind: isTailwind,
+        choiceScarf: isChoiceScarf,
+        paralyzed: isParalyzed,
+      },
+      pokeApiId: testeePokemon.pokeApiId,
+    };
+
+    if (
+      !_teamPokemon.some(
+        (pokemon) =>
+          pokemon.name === pokemonToAdd.name &&
+          pokemon.speed === pokemonToAdd.speed &&
+          pokemon.mods?.statPoints === pokemonToAdd.mods?.statPoints &&
+          pokemon.mods.nature === pokemonToAdd.mods.nature &&
+          pokemon.mods.statChanges === pokemonToAdd.mods.statChanges &&
+          pokemon.mods.tailwind === pokemonToAdd.mods.tailwind &&
+          pokemon.mods.choiceScarf === pokemonToAdd.mods.choiceScarf &&
+          pokemon.mods.paralyzed === pokemonToAdd.mods.paralyzed,
+      )
+    ) {
+      _teamPokemon.push(pokemonToAdd);
+      setTeamPokemon(_teamPokemon);
+    }
+  };
+
+  const handleRemoveFromTeam = (pokemon: PokemonSpeedWithAbility) => {
+    const _teamPokemon = [...teamPokemon];
+    const index = _teamPokemon.indexOf(pokemon);
+    if (index > -1) {
+      _teamPokemon.splice(index, 1);
+      setTeamPokemon(_teamPokemon);
+    }
+  };
+
+  const handleTeamClick = (pokemon: PokemonSpeedWithAbility) => {
+    const teamPokemonName = pokemon.name.split(" w/ ")[0];
+    const teamPokemonOption = pokemonList.find(
+      (poke) => poke.label === teamPokemonName,
+    );
+    setPokemonOption(teamPokemonOption || null);
+
+    if (pokemon.mods) {
+      setEvPoints(pokemon.mods.statPoints);
+      setNatureMod(pokemon.mods.nature);
+      setStatMods(pokemon.mods.statChanges);
+      setIsTailwind(pokemon.mods.tailwind);
+      setIsChoiceScarf(pokemon.mods.choiceScarf);
+      setIsParalyzed(pokemon.mods.paralyzed);
+    }
+
+    // wack ass limbo thing so changing the testee won't set ability to "" after setting it correctly
+    setAbilityLimbo(pokemon.ability || "");
+  };
+
+  return (
+    <div className="grid gap-4">
+      <p className="text-xl font-bold">Your Pokémon</p>
       <FormControl fullWidth>
         <div className="flex gap-x-6">
           <div className="grid w-1/2">
             <Autocomplete
               disablePortal
+              value={pokemonOption}
               options={pokemonList}
               renderInput={(params) => (
                 <TextField {...params} label="Choose Pokémon" />
@@ -173,7 +276,18 @@ export default function PokemonBuild({
           handleChoiceScarfChange={handleChoiceScarfChange}
           handleParalyzedChange={handleParalyzedChange}
         />
+        <Button variant="contained" onClick={handleAddToTeam}>
+          Add to team
+        </Button>
       </FormControl>
-    </>
+      <div>
+        <p className="text-xl font-bold border-2">Your Team</p>
+        <PokemonSpeedList
+          pokemonList={teamPokemon}
+          removePokemonFromTeam={handleRemoveFromTeam}
+          handleTeamPokemonClick={handleTeamClick}
+        />
+      </div>
+    </div>
   );
 }

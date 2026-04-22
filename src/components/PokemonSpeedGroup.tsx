@@ -26,7 +26,7 @@ export default function PokemonSpeedGroup({
         <div className="grow">
           {pokemon.map((poke) => (
             <PokemonSpeedGroupItem
-              key={`item-${poke.name}${poke.user ? "-user" : ""}${poke.team ? "-team" : ""}${poke.pin ? "-pin" : ""}`}
+              key={`item-${poke.name}${poke.user ? "-user" : ""}${poke.team ? "-team" : ""}${poke.pin ? "-pin" : ""}${mainList ? "-main" : ""}${poke.mods ? `-${poke.mods.statPoints}-${poke.mods.nature}-${poke.mods.statChanges}-${poke.mods.tailwind}-${poke.mods.choiceScarf}-${poke.mods.paralyzed}` : ""}`}
               pokemon={poke}
               mainList={mainList}
               pinPokemon={pinPokemon}

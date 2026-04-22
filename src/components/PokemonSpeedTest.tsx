@@ -20,12 +20,21 @@ export default function PokemonSpeedTest() {
   const handleUserPokemonChange = (
     name: string,
     speed: number,
+    mods: {
+      statPoints: number;
+      nature: string;
+      statChanges: number;
+      tailwind: boolean;
+      choiceScarf: boolean;
+      paralyzed: boolean;
+    },
     pokeApiId: number,
   ) => {
     setUserPokemon({
       name: name,
       speed: speed,
       user: true,
+      mods: { ...mods },
       pokeApiId: pokeApiId,
     });
   };

@@ -17,6 +17,15 @@ interface PokemonBuildProps {
   handleUserPokemonChange: (
     name: string,
     speed: number,
+    mods: {
+      statPoints: number;
+      nature: string;
+      statChanges: number;
+      tailwind: boolean;
+      choiceScarf: boolean;
+      paralyzed: boolean;
+    },
+
     pokeApiId: number,
   ) => void;
   handleTeamPokemonChange: (teamPokemon: PokemonSpeedWithAbility[]) => void;
@@ -90,6 +99,14 @@ export default function PokemonBuild({
       handleUserPokemonChange(
         testeePokemon.name,
         speedStat,
+        {
+          statPoints: evPoints,
+          nature: natureMod,
+          statChanges: statMods,
+          tailwind: isTailwind,
+          choiceScarf: isChoiceScarf,
+          paralyzed: isParalyzed,
+        },
         testeePokemon.pokeApiId,
       );
   }, [speedStat, testeePokemon]);
@@ -230,6 +247,7 @@ export default function PokemonBuild({
 
   return (
     <div className="grid gap-4">
+      <p className="text-2xl font-bold italic">Champions Speedtest</p>
       <p className="text-xl font-bold">Your Pokémon</p>
       <FormControl fullWidth>
         <div className="flex gap-x-6">

@@ -1,8 +1,8 @@
-import { useState, MouseEvent } from "react";
 import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 import PinIcon from "../icons/PinIcon";
 import PokeballIcon from "../icons/PokeballIcon";
-import { Popover } from "@mui/material";
+import WindIcon from "../icons/WindIcon";
+import LightningIcon from "../icons/LightningIcon";
 
 interface PokemonSpeedGroupItemProps {
   pokemon: PokemonSpeedWithAbility;
@@ -21,8 +21,6 @@ export default function PokemonSpeedGroupItem({
   removePokemonFromTeam,
   handleTeamPokemonClick,
 }: PokemonSpeedGroupItemProps) {
-  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null);
-
   const handlePin = () => {
     if (!pinPokemon || !unpinPokemon) return;
 
@@ -74,14 +72,6 @@ export default function PokemonSpeedGroupItem({
     }
   };
 
-  const handlePinPopoverOpen = (e: MouseEvent<HTMLElement>) => {
-    setPopoverAnchor(e.currentTarget);
-  };
-
-  const handlePinPopoverClose = () => {
-    setPopoverAnchor(null);
-  };
-
   const bgColor = pokemon.user
     ? "bg-green-300 hover:bg-green-400"
     : pokemon.pin
@@ -105,47 +95,34 @@ export default function PokemonSpeedGroupItem({
       <div
         className={`group flex gap-2 pl-2 transition-colors duration-100 ease-in-out ${bgColor} ${elementClassIdentifier}`}
         onClick={handleOnClick}
-        onMouseEnter={handlePinPopoverOpen}
-        onMouseLeave={handlePinPopoverClose}
       >
         <div className="size-6">
           {(pokemon.user || pokemon.team) && (
-            <PokeballIcon handleRemoveFromTeam={handleRemoveFromTeam} />
+            <PokeballIcon
+              team={pokemon.team || false}
+              handleRemoveFromTeam={handleRemoveFromTeam}
+            />
           )}
           {!(pokemon.user || pokemon.team) && (
             <PinIcon isPinned={pokemon.pin || false} handlePin={handlePin} />
           )}
         </div>
         <p>{pokemon.name}</p>
+        {pokemon.mods && (
+          <>
+            <p className="text-neutral-600">{`${(pokemon.mods.statChanges < 0 ? pokemon.mods.statChanges : pokemon.mods.statChanges > 0 ? "+" + pokemon.mods.statChanges : "") + " "}${pokemon.mods.statPoints}${pokemon.mods.nature === "positive" ? "+" : pokemon.mods.nature === "negative" ? "-" : ""} Spe`}</p>
+            {pokemon.mods.tailwind && <WindIcon />}
+            {pokemon.mods.choiceScarf && (
+              <img
+                src={require("./../icons/Bag_Choice_Scarf_Sprite.png")}
+                alt="Choice Scarf icon"
+                className="size-6"
+              />
+            )}
+            {pokemon.mods.paralyzed && <LightningIcon />}
+          </>
+        )}
       </div>
-      {(pokemon.pin || pokemon.team) && pokemon.mods && (
-        <Popover
-          sx={{ pointerEvents: "none" }}
-          open={!!popoverAnchor}
-          anchorEl={popoverAnchor}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          transformOrigin={{ vertical: "bottom", horizontal: "center" }}
-          onClose={handlePinPopoverClose}
-          disableRestoreFocus
-        >
-          <div className="p-2">
-            <p>{pokemon.name}</p>
-            <p>{pokemon.mods.statPoints} stat points</p>
-            {pokemon.mods.nature !== "neutral" && (
-              <p>{pokemon.mods.nature === "positive" ? "+" : "-"} nature</p>
-            )}
-            {pokemon.mods.statChanges !== 0 && (
-              <p>
-                {pokemon.mods.statChanges > 0 ? "+" : ""}
-                {pokemon.mods.statChanges}
-              </p>
-            )}
-            {pokemon.mods.tailwind && <p>Tailwind</p>}
-            {pokemon.mods.choiceScarf && <p>Choice Scarf</p>}
-            {pokemon.mods.paralyzed && <p>Paralyzed</p>}
-          </div>
-        </Popover>
-      )}
     </div>
   );
 }

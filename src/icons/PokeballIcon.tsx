@@ -1,16 +1,20 @@
 import { useState, MouseEvent } from "react";
 
 interface PokeballIconProps {
+  team: boolean;
   handleRemoveFromTeam: () => void;
 }
 
 export default function PokeballIcon({
+  team,
   handleRemoveFromTeam,
 }: PokeballIconProps) {
   const [showX, setShowX] = useState(false);
 
   const handleShowX = (e: MouseEvent<HTMLElement>) => {
-    setShowX(true);
+    if (team) {
+      setShowX(true);
+    }
   };
 
   const handleHideX = () => {

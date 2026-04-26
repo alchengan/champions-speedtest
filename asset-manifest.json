@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "//alchengan.github.io/champions-speedtest/static/css/main.ff34c62b.css",
+    "main.js": "//alchengan.github.io/champions-speedtest/static/js/main.a186c16e.js",
+    "static/js/453.3962d4b6.chunk.js": "//alchengan.github.io/champions-speedtest/static/js/453.3962d4b6.chunk.js",
+    "index.html": "//alchengan.github.io/champions-speedtest/index.html",
+    "main.ff34c62b.css.map": "//alchengan.github.io/champions-speedtest/static/css/main.ff34c62b.css.map",
+    "main.a186c16e.js.map": "//alchengan.github.io/champions-speedtest/static/js/main.a186c16e.js.map",
+    "453.3962d4b6.chunk.js.map": "//alchengan.github.io/champions-speedtest/static/js/453.3962d4b6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ff34c62b.css",
+    "static/js/main.a186c16e.js"
+  ]
+}

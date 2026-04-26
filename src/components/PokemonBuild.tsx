@@ -302,6 +302,7 @@ export default function PokemonBuild({
         <p className="text-xl font-bold border-2">Your Team</p>
         <PokemonSpeedList
           pokemonList={teamPokemon}
+          classTag="team-pokemon"
           removePokemonFromTeam={handleRemoveFromTeam}
           handleTeamPokemonClick={handleTeamClick}
         />

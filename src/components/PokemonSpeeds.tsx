@@ -7,7 +7,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 import SpeedModifierOptions from "./SpeedModifierOptions";
 import { Autocomplete, FormControl, TextField } from "@mui/material";
 import { CalculateSpeed } from "../helpers/speedFunctions";
-import { FindPokemonInList } from "../helpers/checkMonVisibility";
+import {
+  FindPokemonInList,
+  OverSpeedListOverflow,
+} from "../helpers/checkMonVisibility";
 import PokemonSpeedList from "./PokemonSpeedList";
 import { alphaSortPokemonSpeeds } from "../helpers/otherHelpers";
 
@@ -37,6 +40,8 @@ export default function PokemonSpeeds({
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
   const [isParalyzed, setIsParalyzed] = useState(false);
 
+  const [showOverSpeedScroll, setShowOverSpeedScroll] = useState(false);
+
   // keep user mon in view when changing list stats
   useEffect(() => {
     const userMonOnList = document.getElementsByClassName("user-mon");
@@ -49,6 +54,14 @@ export default function PokemonSpeeds({
   useEffect(() => {
     updateOutOfViewPokemon();
   }, [pinnedPokemon]);
+
+  // swap between scroll area and div for faster pokemon
+  useEffect(() => {
+    setShowOverSpeedScroll(OverSpeedListOverflow());
+    const fastPokemon = document.getElementsByClassName("faster-pokemon");
+    const lastFastPokemon = fastPokemon.item(fastPokemon.length - 1);
+    lastFastPokemon?.scrollIntoView(false);
+  }, [fasterPokemon]);
 
   const everyPokemon = userPokemon
     ? [...GetPokemonSpeedsWithAbilities(), userPokemon]
@@ -156,8 +169,13 @@ export default function PokemonSpeeds({
       // else pokemon is visible on main list
     });
 
-    setFasterPokemon(abovePokemon);
-    setSlowerPokemon(belowPokemon);
+    if (abovePokemon.length !== fasterPokemon.length) {
+      setFasterPokemon(abovePokemon);
+    }
+
+    if (belowPokemon.length !== slowerPokemon.length) {
+      setSlowerPokemon(belowPokemon);
+    }
   };
 
   const handleListScroll = (e: any) => {
@@ -211,16 +229,45 @@ export default function PokemonSpeeds({
   return (
     <div className="flex h-full gap-x-6">
       <div className="w-1/2 h-full grid grid-rows-5">
-        <div className="relative row-span-1 border-2">
-          <div className="absolute w-full bottom-0">
-            <PokemonSpeedList
-              pokemonList={fasterPokemon}
-              bottomElements
-              pinPokemon={pinPokemon}
-              unpinPokemon={unpinPokemon}
-            />
+        {showOverSpeedScroll ? (
+          <ScrollArea.Root className={"row-span-1 border-2"}>
+            <ScrollArea.Viewport
+              id="over-speed-list-container"
+              className={"h-full border-r-1"}
+            >
+              <ScrollArea.Content id="over-speed-list" className={"mr-6"}>
+                <PokemonSpeedList
+                  pokemonList={fasterPokemon}
+                  classTag="faster-pokemon"
+                  pinPokemon={pinPokemon}
+                  unpinPokemon={unpinPokemon}
+                />
+              </ScrollArea.Content>
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar
+              className={
+                "flex justify-center bg-gray-200 w-[0.25rem] m-[0.5rem]"
+              }
+            >
+              <ScrollArea.Thumb className={"w-full bg-gray-500"} />
+            </ScrollArea.Scrollbar>
+            <ScrollArea.Corner />
+          </ScrollArea.Root>
+        ) : (
+          <div
+            id="over-speed-list-container"
+            className="relative row-span-1 border-2"
+          >
+            <div id="over-speed-list" className="absolute w-full bottom-0 pr-6">
+              <PokemonSpeedList
+                pokemonList={fasterPokemon}
+                classTag="faster-pokemon"
+                pinPokemon={pinPokemon}
+                unpinPokemon={unpinPokemon}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <ScrollArea.Root id="speed-list" className={"row-span-3"}>
           <ScrollArea.Viewport
             className={"h-full border-r-1"}
@@ -230,6 +277,7 @@ export default function PokemonSpeeds({
               <PokemonSpeedList
                 pokemonList={everyPokemonCalculatedSpeeds}
                 mainList
+                classTag="main-list-pokemon"
                 pinPokemon={pinPokemon}
                 unpinPokemon={unpinPokemon}
               />
@@ -242,13 +290,27 @@ export default function PokemonSpeeds({
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
-        <div className="row-span-1 border-2">
-          <PokemonSpeedList
-            pokemonList={slowerPokemon}
-            pinPokemon={pinPokemon}
-            unpinPokemon={unpinPokemon}
-          />
-        </div>
+        <ScrollArea.Root
+          id="under-speed-list"
+          className={"row-span-1 border-2"}
+        >
+          <ScrollArea.Viewport className={"h-full border-r-1"}>
+            <ScrollArea.Content className={"mr-6"}>
+              <PokemonSpeedList
+                pokemonList={slowerPokemon}
+                classTag="main-list-pokemon"
+                pinPokemon={pinPokemon}
+                unpinPokemon={unpinPokemon}
+              />
+            </ScrollArea.Content>
+          </ScrollArea.Viewport>
+          <ScrollArea.Scrollbar
+            className={"flex justify-center bg-gray-200 w-[0.25rem] m-[0.5rem]"}
+          >
+            <ScrollArea.Thumb className={"w-full bg-gray-500"} />
+          </ScrollArea.Scrollbar>
+          <ScrollArea.Corner />
+        </ScrollArea.Root>
       </div>
       <div className="w-1/2">
         <p className="text-xl font-bold pb-4">Opposing Pokémon</p>
@@ -282,6 +344,7 @@ export default function PokemonSpeeds({
             <p className="text-xl font-bold">Pins</p>
             <PokemonSpeedList
               pokemonList={pinnedPokemon}
+              classTag="pinned-pokemon"
               pinPokemon={pinPokemon}
               unpinPokemon={unpinPokemon}
             />

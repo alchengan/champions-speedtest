@@ -5,6 +5,7 @@ interface PokemonSpeedGroupProps {
   speed: number;
   pokemon: PokemonSpeedWithAbility[];
   mainList: boolean;
+  classTag: string;
   pinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
   unpinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
   removePokemonFromTeam?: (pokemon: PokemonSpeedWithAbility) => void;
@@ -15,6 +16,7 @@ export default function PokemonSpeedGroup({
   speed,
   pokemon,
   mainList,
+  classTag,
   pinPokemon,
   unpinPokemon,
   removePokemonFromTeam,
@@ -29,6 +31,7 @@ export default function PokemonSpeedGroup({
               key={`item-${poke.name}${poke.user ? "-user" : ""}${poke.team ? "-team" : ""}${poke.pin ? "-pin" : ""}${mainList ? "-main" : ""}${poke.mods ? `-${poke.mods.statPoints}-${poke.mods.nature}-${poke.mods.statChanges}-${poke.mods.tailwind}-${poke.mods.choiceScarf}-${poke.mods.paralyzed}` : ""}`}
               pokemon={poke}
               mainList={mainList}
+              classTag={classTag}
               pinPokemon={pinPokemon}
               unpinPokemon={unpinPokemon}
               removePokemonFromTeam={removePokemonFromTeam}
@@ -36,9 +39,7 @@ export default function PokemonSpeedGroup({
             />
           ))}
         </div>
-        <p className={`w-10 pr-2 text-lg font-bold ${!mainList ? "mr-6" : ""}`}>
-          {speed}
-        </p>
+        <p className={`w-10 pr-2 text-lg font-bold`}>{speed}</p>
       </div>
     </div>
   );

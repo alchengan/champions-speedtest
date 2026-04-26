@@ -6,7 +6,7 @@ type PokemonSpeedGroups = { [speed: number]: PokemonSpeedWithAbility[] };
 interface PokemonSpeedListProps {
   pokemonList: PokemonSpeedWithAbility[];
   mainList?: boolean;
-  bottomElements?: boolean;
+  classTag: string;
   pinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
   unpinPokemon?: (pokemon: PokemonSpeedWithAbility) => void;
   removePokemonFromTeam?: (pokemon: PokemonSpeedWithAbility) => void;
@@ -16,6 +16,7 @@ interface PokemonSpeedListProps {
 export default function PokemonSpeedList({
   pokemonList,
   mainList,
+  classTag,
   pinPokemon,
   unpinPokemon,
   removePokemonFromTeam,
@@ -42,6 +43,7 @@ export default function PokemonSpeedList({
             speed={+speed}
             pokemon={sortBySpeed[+speed]}
             mainList={mainList || false}
+            classTag={classTag}
             pinPokemon={pinPokemon}
             unpinPokemon={unpinPokemon}
             removePokemonFromTeam={removePokemonFromTeam}

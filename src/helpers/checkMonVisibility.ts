@@ -33,3 +33,22 @@ export function FindPokemonInList(pokemon: PokemonSpeedWithAbility): number {
 
   return 0;
 }
+
+export function OverSpeedListOverflow(): boolean {
+  const overSpeedList = document.getElementById("over-speed-list");
+  const overSpeedListContainer = document.getElementById(
+    "over-speed-list-container",
+  );
+
+  if (overSpeedList && overSpeedListContainer) {
+    var overSpeedListRect = overSpeedList.getBoundingClientRect();
+    var overSpeedListRectContainer =
+      overSpeedListContainer.getBoundingClientRect();
+
+    if (overSpeedListRect.height > overSpeedListRectContainer.height) {
+      return true;
+    }
+  }
+
+  return false;
+}

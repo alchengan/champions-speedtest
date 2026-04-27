@@ -12,6 +12,7 @@ import { CalculateSpeed } from "../helpers/speedFunctions";
 import SpeedModifierOptions from "./SpeedModifierOptions";
 import PokemonSpeedList from "./PokemonSpeedList";
 import { Button } from "@mui/material";
+import AboutIcon from "../icons/AboutIcon";
 
 interface PokemonBuildProps {
   handleUserPokemonChange: (
@@ -247,7 +248,10 @@ export default function PokemonBuild({
 
   return (
     <div className="grid gap-4">
-      <p className="text-2xl font-bold italic">Champions Speedtest</p>
+      <div className="flex justify-center gap-2">
+        <p className="text-2xl font-bold italic">Champions Speedtest</p>
+        <AboutIcon />
+      </div>
       <p className="text-xl font-bold">Your Pokémon</p>
       <FormControl fullWidth>
         <div className="flex gap-x-6">
@@ -262,7 +266,7 @@ export default function PokemonBuild({
               onChange={handlePokemonChange}
             />
             <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${testeePokemon?.pokeApiId}.png`}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${testeePokemon?.pokeApiId || 0}.png`}
               className="w-48 py-4"
             />
           </div>

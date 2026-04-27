@@ -2,7 +2,7 @@
   "name": "vgc-speed-test",
   "version": "0.1.0",
   "homepage": "https://alchengan.github.io/champions-speedtest/",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@base-ui/react": "^1.4.0",
     "@emotion/react": "^11.14.0",

@@ -1,0 +1,27 @@
+import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
+
+interface EditIconProps {
+  handleEditOnClick: (e: any) => void;
+}
+
+export default function EditIcon({ handleEditOnClick }: EditIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="gray"
+      viewBox="0 0 24 24"
+      height="24"
+      width="24"
+      className="hover:fill-black"
+      onClick={handleEditOnClick}
+    >
+      <g id="Edit">
+        <path
+          id="Union"
+          d="M15.8691 2.22462c0.3928 -0.32035 0.9718 -0.29776 1.3379 0.06836l4.5 4.5 0.0684 0.07617c0.3202 0.39277 0.2977 0.97182 -0.0684 1.33789L7.91406 22H2v-5.9141L15.793 2.29298zM4 16.9141V20h3.08594l9.20706 -9.207 -3.086 -3.08596z"
+          stroke-width="1"
+        ></path>
+      </g>
+    </svg>
+  );
+}

@@ -55,6 +55,9 @@ export default function PokemonBuild({
   const [teamPokemon, setTeamPokemon] = useState<PokemonSpeedWithAbility[]>([]);
   const [abilityLimbo, setAbilityLimbo] = useState("");
 
+  const [editPokemon, setEditPokemon] = useState(false);
+  const [editedPokemon, setEditedPokemon] = useState<PokemonSpeedWithAbility>();
+
   useEffect(() => {
     if (pokemonOption) {
       setTesteePokemon(pokemonOption.pokemon);
@@ -246,6 +249,34 @@ export default function PokemonBuild({
     setAbilityLimbo(pokemon.ability || "");
   };
 
+  const handleTeamPokemonEdit = (pokemon: PokemonSpeedWithAbility) => {
+    handleTeamClick(pokemon);
+    setEditedPokemon(pokemon);
+    setEditPokemon(true);
+  };
+
+  const handleSaveEdit = () => {
+    // remove old mon add new one
+    // if new edited mon is same as another, won't add (old mon will be removed)
+    if (editedPokemon) {
+      teamPokemon.splice(teamPokemon.indexOf(editedPokemon), 1);
+      handleAddToTeam();
+    }
+    setEditedPokemon(undefined);
+    setEditPokemon(false);
+  };
+
+  const handleAddAsNewEdit = () => {
+    handleAddToTeam();
+    setEditedPokemon(undefined);
+    setEditPokemon(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditedPokemon(undefined);
+    setEditPokemon(false);
+  };
+
   return (
     <div className="grid gap-4">
       <div className="flex justify-center gap-2">
@@ -298,17 +329,45 @@ export default function PokemonBuild({
           handleChoiceScarfChange={handleChoiceScarfChange}
           handleParalyzedChange={handleParalyzedChange}
         />
-        <Button variant="contained" onClick={handleAddToTeam}>
-          Add to team
-        </Button>
+        {editPokemon ? (
+          <div className="flex justify-between gap-2">
+            <Button
+              variant="contained"
+              className="w-full"
+              onClick={handleSaveEdit}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              className="w-full"
+              onClick={handleAddAsNewEdit}
+            >
+              Add As New
+            </Button>
+            <Button
+              variant="outlined"
+              className="w-full"
+              onClick={handleCancelEdit}
+            >
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          <Button variant="contained" onClick={handleAddToTeam}>
+            Add to team
+          </Button>
+        )}
       </FormControl>
       <div>
         <p className="text-xl font-bold border-2">Your Team</p>
         <PokemonSpeedList
           pokemonList={teamPokemon}
+          teamList
           classTag="team-pokemon"
           removePokemonFromTeam={handleRemoveFromTeam}
           handleTeamPokemonClick={handleTeamClick}
+          handleTeamPokemonEdit={handleTeamPokemonEdit}
         />
       </div>
     </div>

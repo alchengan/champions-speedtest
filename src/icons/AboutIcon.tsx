@@ -1,10 +1,5 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
 import { useState } from "react";
+import AboutDialog from "../components/AboutDialog";
 
 export default function AboutIcon() {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -36,21 +31,7 @@ export default function AboutIcon() {
           ></path>
         </g>
       </svg>
-      <Dialog
-        fullWidth
-        maxWidth="md"
-        open={aboutOpen}
-        onClose={handleAboutClose}
-        aria-labelledby="about-dialog-title"
-        aria-describedby="about-dialog"
-        role="dialog"
-      >
-        <DialogTitle>About Speedtest</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Check your speed pls</DialogContentText>
-          <DialogContentText>Made by Alan Cheng</DialogContentText>
-        </DialogContent>
-      </Dialog>
+      <AboutDialog aboutOpen={aboutOpen} handleAboutClose={handleAboutClose} />
     </>
   );
 }

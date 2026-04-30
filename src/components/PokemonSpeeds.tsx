@@ -224,6 +224,10 @@ export default function PokemonSpeeds({
       behavior: "smooth",
       block: "center",
     });
+    searchPokemonOnList?.item(0)?.classList.add("animate-flash");
+    setTimeout(() => {
+      searchPokemonOnList?.item(0)?.classList.remove("animate-flash");
+    }, 1000);
   };
 
   return (

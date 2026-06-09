@@ -40,8 +40,8 @@ export default function PokeballIcon({
       onClick={handleXClick}
     >
       <desc>X Streamline Icon: https://streamlinehq.com</desc>
-      <path d="M18 6 6 18" stroke-width="2"></path>
-      <path d="m6 6 12 12" stroke-width="2"></path>
+      <path d="M18 6 6 18" strokeWidth="2"></path>
+      <path d="m6 6 12 12" strokeWidth="2"></path>
     </svg>
   );
 

@@ -40,6 +40,8 @@ export default function PokemonSpeeds({
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
   const [isParalyzed, setIsParalyzed] = useState(false);
 
+  const [searchPokemon, setSearchPokemon] = useState<{ name: string }>();
+
   const [showOverSpeedScroll, setShowOverSpeedScroll] = useState(false);
 
   // keep user mon in view when changing list stats
@@ -63,9 +65,11 @@ export default function PokemonSpeeds({
     lastFastPokemon?.scrollIntoView(false);
   }, [fasterPokemon]);
 
+  const pokemonList = GetPokemonSpeedsWithAbilities();
+
   const everyPokemon = userPokemon
-    ? [...GetPokemonSpeedsWithAbilities(), userPokemon]
-    : [...GetPokemonSpeedsWithAbilities()];
+    ? [...pokemonList, userPokemon]
+    : [...pokemonList];
 
   // calculate effective speeds
   const everyPokemonCalculatedSpeeds: PokemonSpeedWithAbility[] =
@@ -120,7 +124,7 @@ export default function PokemonSpeeds({
   fasterPokemon.sort(alphaSortPokemonSpeeds);
   slowerPokemon.sort(alphaSortPokemonSpeeds);
 
-  const searchPokemonOptions = everyPokemon.map((pokemon) => ({
+  const searchPokemonOptions = pokemonList.map((pokemon) => ({
     label: pokemon.name,
     name: pokemon.name,
   }));
@@ -212,13 +216,9 @@ export default function PokemonSpeeds({
     setIsParalyzed(e.target.checked);
   };
 
-  const handlePokemonSearch = (
-    e: any,
-    searchPokemon: { name: string } | null,
-  ) => {
-    if (!searchPokemon) return;
+  const scrollToSearchPokemon = (searchScrollPokemon: { name: string }) => {
     const searchPokemonOnList = document.getElementsByClassName(
-      `search-mon-${searchPokemon.name.replace(/ /g, "-").toLowerCase()}`,
+      `search-mon-${searchScrollPokemon.name.replace(/ /g, "-").toLowerCase()}`,
     );
     searchPokemonOnList?.item(0)?.scrollIntoView({
       behavior: "smooth",
@@ -228,6 +228,22 @@ export default function PokemonSpeeds({
     setTimeout(() => {
       searchPokemonOnList?.item(0)?.classList.remove("animate-flash");
     }, 1000);
+  };
+
+  const handlePokemonSearch = (
+    e: any,
+    _searchPokemon: { name: string } | null,
+  ) => {
+    if (!_searchPokemon) return;
+    setSearchPokemon(_searchPokemon);
+    scrollToSearchPokemon(_searchPokemon);
+  };
+
+  const handleSearchEnter = (e: any) => {
+    if (e.key === "Enter") {
+      if (!searchPokemon) return;
+      scrollToSearchPokemon(searchPokemon);
+    }
   };
 
   return (
@@ -343,6 +359,7 @@ export default function PokemonSpeeds({
               <TextField {...params} label="Search Pokémon" />
             )}
             onChange={handlePokemonSearch}
+            onKeyDown={handleSearchEnter}
           />
           <div className="border-2">
             <p className="text-xl font-bold">Pins</p>

@@ -278,9 +278,11 @@ export default function PokemonBuild({
   };
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 p-2">
       <div className="flex justify-center gap-2">
-        <p className="text-2xl font-bold italic">Champions Speedtest</p>
+        <p className="text-2xl font-bold italic text-sky-700">
+          Champions Speedtest
+        </p>
         <AboutIcon />
       </div>
       <p className="text-xl font-bold">Your Pokémon</p>
@@ -359,8 +361,8 @@ export default function PokemonBuild({
           </Button>
         )}
       </FormControl>
-      <div>
-        <p className="text-xl font-bold border-2">Your Team</p>
+      <div className="border-2 border-gray-500">
+        <p className="text-xl font-bold">Your Team</p>
         <PokemonSpeedList
           pokemonList={teamPokemon}
           teamList

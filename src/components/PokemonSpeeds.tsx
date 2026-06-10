@@ -247,10 +247,10 @@ export default function PokemonSpeeds({
   };
 
   return (
-    <div className="flex h-full gap-x-6">
+    <div className="flex h-full gap-x-6 p-2">
       <div className="w-1/2 h-full grid grid-rows-5">
         {showOverSpeedScroll ? (
-          <ScrollArea.Root className={"row-span-1 border-2"}>
+          <ScrollArea.Root className={"row-span-1 border-2 border-gray-500"}>
             <ScrollArea.Viewport
               id="over-speed-list-container"
               className={"h-full border-r-1"}
@@ -266,17 +266,17 @@ export default function PokemonSpeeds({
             </ScrollArea.Viewport>
             <ScrollArea.Scrollbar
               className={
-                "flex justify-center bg-gray-200 w-[0.25rem] m-[0.5rem]"
+                "flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"
               }
             >
-              <ScrollArea.Thumb className={"w-full bg-gray-500"} />
+              <ScrollArea.Thumb className={"w-full bg-gray-300"} />
             </ScrollArea.Scrollbar>
             <ScrollArea.Corner />
           </ScrollArea.Root>
         ) : (
           <div
             id="over-speed-list-container"
-            className="relative row-span-1 border-2"
+            className="relative row-span-1 border-2 border-gray-500"
           >
             <div id="over-speed-list" className="absolute w-full bottom-0 pr-6">
               <PokemonSpeedList
@@ -304,15 +304,15 @@ export default function PokemonSpeeds({
             </ScrollArea.Content>
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar
-            className={"flex justify-center bg-gray-200 w-[0.25rem] m-[0.5rem]"}
+            className={"flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"}
           >
-            <ScrollArea.Thumb className={"w-full bg-gray-500"} />
+            <ScrollArea.Thumb className={"w-full bg-gray-300"} />
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
         <ScrollArea.Root
           id="under-speed-list"
-          className={"row-span-1 border-2"}
+          className={"row-span-1 border-2 border-gray-500"}
         >
           <ScrollArea.Viewport className={"h-full border-r-1"}>
             <ScrollArea.Content className={"mr-6"}>
@@ -325,9 +325,9 @@ export default function PokemonSpeeds({
             </ScrollArea.Content>
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar
-            className={"flex justify-center bg-gray-200 w-[0.25rem] m-[0.5rem]"}
+            className={"flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"}
           >
-            <ScrollArea.Thumb className={"w-full bg-gray-500"} />
+            <ScrollArea.Thumb className={"w-full bg-gray-300"} />
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
@@ -361,7 +361,7 @@ export default function PokemonSpeeds({
             onChange={handlePokemonSearch}
             onKeyDown={handleSearchEnter}
           />
-          <div className="border-2">
+          <div className="border-2 border-gray-500">
             <p className="text-xl font-bold">Pins</p>
             <PokemonSpeedList
               pokemonList={pinnedPokemon}

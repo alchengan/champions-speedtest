@@ -27,7 +27,7 @@ export default function PokemonSpeedGroup({
   handleTeamPokemonEdit,
 }: PokemonSpeedGroupProps) {
   return (
-    <div className="border-b-2 last:border-0">
+    <div className="border-b-2 border-gray-500 last:border-0">
       <div className="flex justify-between gap-4">
         <div className="grow">
           {pokemon.map((poke) => (
@@ -45,7 +45,7 @@ export default function PokemonSpeedGroup({
             />
           ))}
         </div>
-        <p className={`w-10 pr-2 text-lg font-bold`}>{speed}</p>
+        <p className={`w-10 pr-2 text-base font-bold`}>{speed}</p>
       </div>
     </div>
   );

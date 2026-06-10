@@ -25,10 +25,11 @@ export default function AboutDialog({
       aria-describedby="about-dialog"
       role="dialog"
     >
-      <DialogTitle>About</DialogTitle>
-      <DialogContent className="grid gap-y-4">
+      <DialogTitle className="bg-slate-300">About</DialogTitle>
+      <DialogContent className="grid gap-y-4 bg-slate-300">
         <DialogContentText>
-          Champions Speedtest created by Alan Cheng
+          Champions Speedtest created by{" "}
+          <Link href="https://x.com/aaaalanvgc">Alan Cheng</Link>
         </DialogContentText>
         <DialogContentText>
           Source code for Champions Speedtest can be viewed on{" "}

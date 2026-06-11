@@ -13,14 +13,14 @@ export default function AboutIcon() {
   };
 
   return (
-    <>
+    <div className="pt-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="gray"
         viewBox="0 0 24 24"
         height="24"
         width="24"
-        className="hover:fill-black"
+        className="hover:fill-slate-700"
         onClick={handleAboutOpen}
       >
         <g id="info">
@@ -32,6 +32,6 @@ export default function AboutIcon() {
         </g>
       </svg>
       <AboutDialog aboutOpen={aboutOpen} handleAboutClose={handleAboutClose} />
-    </>
+    </div>
   );
 }

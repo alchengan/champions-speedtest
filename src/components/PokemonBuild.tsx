@@ -280,8 +280,8 @@ export default function PokemonBuild({
   return (
     <div className="grid gap-4 p-2">
       <div className="flex justify-center gap-2">
-        <p className="text-2xl font-bold italic text-sky-700">
-          Champions Speedtest
+        <p className="text-2xl font-bold italic text-sky-500 title">
+          CHAMPIONS SPEEDTEST
         </p>
         <AboutIcon />
       </div>

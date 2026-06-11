@@ -48,7 +48,7 @@ export default function PokemonSpeedTest() {
       <Grid container spacing={2}>
         <Grid size={4}>
           <Card>
-            <CardContent className="bg-slate-400">
+            <CardContent className="bg-slate-300">
               <PokemonBuild
                 handleUserPokemonChange={handleUserPokemonChange}
                 handleTeamPokemonChange={handleTeamPokemonChange}
@@ -58,7 +58,7 @@ export default function PokemonSpeedTest() {
         </Grid>
         <Grid size={8}>
           <Card className="h-[calc(100vh-32px)]">
-            <CardContent className="h-full bg-slate-400">
+            <CardContent className="h-full bg-slate-300">
               <PokemonSpeeds
                 userPokemon={userPokemon}
                 teamPokemon={teamPokemon}

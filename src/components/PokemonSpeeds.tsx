@@ -269,7 +269,7 @@ export default function PokemonSpeeds({
                 "flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"
               }
             >
-              <ScrollArea.Thumb className={"w-full bg-gray-300"} />
+              <ScrollArea.Thumb className={"w-full bg-gray-200"} />
             </ScrollArea.Scrollbar>
             <ScrollArea.Corner />
           </ScrollArea.Root>
@@ -306,7 +306,7 @@ export default function PokemonSpeeds({
           <ScrollArea.Scrollbar
             className={"flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"}
           >
-            <ScrollArea.Thumb className={"w-full bg-gray-300"} />
+            <ScrollArea.Thumb className={"w-full bg-gray-200"} />
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>
@@ -327,7 +327,7 @@ export default function PokemonSpeeds({
           <ScrollArea.Scrollbar
             className={"flex justify-center bg-gray-500 w-[0.25rem] m-[0.5rem]"}
           >
-            <ScrollArea.Thumb className={"w-full bg-gray-300"} />
+            <ScrollArea.Thumb className={"w-full bg-gray-200"} />
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner />
         </ScrollArea.Root>

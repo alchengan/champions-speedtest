@@ -87,12 +87,12 @@ export default function PokemonSpeedGroupItem({
   };
 
   const bgColor = pokemon.user
-    ? "bg-green-400 hover:bg-green-300"
+    ? "bg-green-400 hover:bg-green-500"
     : pokemon.pin
-      ? "bg-yellow-400 hover:bg-yellow-300"
+      ? "bg-yellow-400 hover:bg-yellow-500"
       : pokemon.team
-        ? "bg-blue-400 hover:bg-blue-300"
-        : "hover:bg-slate-300";
+        ? "bg-blue-400 hover:bg-blue-500"
+        : "hover:bg-slate-400";
 
   const elementClassIdentifier = mainList
     ? pokemon.user // user pokemon

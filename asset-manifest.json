@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/champions-speedtest/static/css/main.467a79a4.css",
-    "main.js": "/champions-speedtest/static/js/main.f5f1face.js",
+    "main.css": "/champions-speedtest/static/css/main.c1605c33.css",
+    "main.js": "/champions-speedtest/static/js/main.0964e42d.js",
     "static/js/453.3962d4b6.chunk.js": "/champions-speedtest/static/js/453.3962d4b6.chunk.js",
     "index.html": "/champions-speedtest/index.html",
-    "main.467a79a4.css.map": "/champions-speedtest/static/css/main.467a79a4.css.map",
-    "main.f5f1face.js.map": "/champions-speedtest/static/js/main.f5f1face.js.map",
+    "main.c1605c33.css.map": "/champions-speedtest/static/css/main.c1605c33.css.map",
+    "main.0964e42d.js.map": "/champions-speedtest/static/js/main.0964e42d.js.map",
     "453.3962d4b6.chunk.js.map": "/champions-speedtest/static/js/453.3962d4b6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.467a79a4.css",
-    "static/js/main.f5f1face.js"
+    "static/css/main.c1605c33.css",
+    "static/js/main.0964e42d.js"
   ]
 }

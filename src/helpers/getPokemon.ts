@@ -22,6 +22,7 @@ export type PokemonSpeedWithAbility = {
     tailwind: boolean;
     choiceScarf: boolean;
     paralyzed: boolean;
+    ironBall: boolean;
   };
   pokeApiId: number;
 };

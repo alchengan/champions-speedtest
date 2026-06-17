@@ -23,6 +23,7 @@ export function CalculateSpeed(
   isTailwind: boolean,
   isChoiceScarf: boolean,
   isParalyzed: boolean,
+  isIronBall: boolean,
 ): number {
   const natureValue =
     natureMod === "negative" ? 0.9 : natureMod === "positive" ? 1.1 : 1;
@@ -44,15 +45,17 @@ export function CalculateSpeed(
     tailwindSpeed * GetAbilitySpeedModifier(abilityMod),
   );
 
-  // choice scarf
-  const choiceScarfSpeed = isChoiceScarf
+  // items
+  const itemsSpeed = isChoiceScarf
     ? Math.floor(abilityModSpeed * 1.5)
-    : abilityModSpeed;
+    : isIronBall
+      ? Math.floor(abilityModSpeed * 0.5)
+      : abilityModSpeed;
 
   // para
   const paralyzedSpeed = isParalyzed
-    ? Math.floor(choiceScarfSpeed * 0.5)
-    : choiceScarfSpeed;
+    ? Math.floor(itemsSpeed * 0.5)
+    : itemsSpeed;
 
   return paralyzedSpeed;
 }

@@ -25,6 +25,7 @@ interface PokemonBuildProps {
       tailwind: boolean;
       choiceScarf: boolean;
       paralyzed: boolean;
+      ironBall: boolean;
     },
 
     pokeApiId: number,
@@ -49,6 +50,7 @@ export default function PokemonBuild({
   const [isTailwind, setIsTailwind] = useState(false);
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
   const [isParalyzed, setIsParalyzed] = useState(false);
+  const [isIronBall, setIsIronBall] = useState(false);
 
   const [speedStat, setSpeedStat] = useState(0);
 
@@ -84,6 +86,7 @@ export default function PokemonBuild({
         isTailwind,
         isChoiceScarf,
         isParalyzed,
+        isIronBall,
       ),
     );
   }, [
@@ -95,6 +98,7 @@ export default function PokemonBuild({
     isTailwind,
     isChoiceScarf,
     isParalyzed,
+    isIronBall,
   ]);
 
   // update user pokemon
@@ -110,6 +114,7 @@ export default function PokemonBuild({
           tailwind: isTailwind,
           choiceScarf: isChoiceScarf,
           paralyzed: isParalyzed,
+          ironBall: isIronBall,
         },
         testeePokemon.pokeApiId,
       );
@@ -169,6 +174,10 @@ export default function PokemonBuild({
     setIsParalyzed(e.target.checked);
   };
 
+  const handleIronBallChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsIronBall(e.target.checked);
+  };
+
   const handleAddToTeam = () => {
     if (!testeePokemon) return;
 
@@ -187,6 +196,7 @@ export default function PokemonBuild({
         isTailwind,
         isChoiceScarf,
         isParalyzed,
+        isIronBall,
       ),
       ...(abilityMod !== "" && { ability: abilityMod }),
       user: false,
@@ -198,6 +208,7 @@ export default function PokemonBuild({
         tailwind: isTailwind,
         choiceScarf: isChoiceScarf,
         paralyzed: isParalyzed,
+        ironBall: isIronBall,
       },
       pokeApiId: testeePokemon.pokeApiId,
     };
@@ -212,7 +223,8 @@ export default function PokemonBuild({
           pokemon.mods.statChanges === pokemonToAdd.mods.statChanges &&
           pokemon.mods.tailwind === pokemonToAdd.mods.tailwind &&
           pokemon.mods.choiceScarf === pokemonToAdd.mods.choiceScarf &&
-          pokemon.mods.paralyzed === pokemonToAdd.mods.paralyzed,
+          pokemon.mods.paralyzed === pokemonToAdd.mods.paralyzed &&
+          pokemon.mods.ironBall === pokemonToAdd.mods.ironBall,
       )
     ) {
       _teamPokemon.push(pokemonToAdd);
@@ -243,6 +255,7 @@ export default function PokemonBuild({
       setIsTailwind(pokemon.mods.tailwind);
       setIsChoiceScarf(pokemon.mods.choiceScarf);
       setIsParalyzed(pokemon.mods.paralyzed);
+      setIsIronBall(pokemon.mods.ironBall);
     }
 
     // wack ass limbo thing so changing the testee won't set ability to "" after setting it correctly
@@ -322,6 +335,7 @@ export default function PokemonBuild({
           isTailwind={isTailwind}
           isChoiceScarf={isChoiceScarf}
           isParalyzed={isParalyzed}
+          isIronBall={isIronBall}
           handleEVFieldChange={handleEVFieldChange}
           handleEVPointsChange={handleEVPointsChange}
           handleNatureModChange={handleNatureModChange}
@@ -330,6 +344,7 @@ export default function PokemonBuild({
           handleTailwindChange={handleTailwindChange}
           handleChoiceScarfChange={handleChoiceScarfChange}
           handleParalyzedChange={handleParalyzedChange}
+          handleIronBallChange={handleIronBallChange}
         />
         {editPokemon ? (
           <div className="flex justify-between gap-2">

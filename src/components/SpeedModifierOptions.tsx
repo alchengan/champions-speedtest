@@ -20,6 +20,7 @@ export interface SpeedModifierOptionsProps {
   isTailwind: boolean;
   isChoiceScarf: boolean;
   isParalyzed: boolean;
+  isIronBall: boolean;
   handleEVFieldChange: (newValue: number | null, e: any) => void;
   handleEVPointsChange: (e: any, newValue: number) => void;
   handleNatureModChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -28,6 +29,7 @@ export interface SpeedModifierOptionsProps {
   handleTailwindChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleChoiceScarfChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleParalyzedChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleIronBallChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function SpeedModifierOptions({
@@ -39,6 +41,7 @@ export default function SpeedModifierOptions({
   isTailwind,
   isChoiceScarf,
   isParalyzed,
+  isIronBall,
   handleEVFieldChange,
   handleEVPointsChange,
   handleNatureModChange,
@@ -47,6 +50,7 @@ export default function SpeedModifierOptions({
   handleTailwindChange,
   handleChoiceScarfChange,
   handleParalyzedChange,
+  handleIronBallChange,
 }: SpeedModifierOptionsProps) {
   const statModMarks = Array.from({ length: 13 }, (v, i) => i - 6).map(
     (num) => ({
@@ -138,6 +142,12 @@ export default function SpeedModifierOptions({
             />
           }
           label="Choice Scarf"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox checked={isIronBall} onChange={handleIronBallChange} />
+          }
+          label="Iron Ball"
         />
         <FormControlLabel
           control={

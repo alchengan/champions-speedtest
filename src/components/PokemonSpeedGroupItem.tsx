@@ -133,6 +133,13 @@ export default function PokemonSpeedGroupItem({
                 className="size-6"
               />
             )}
+            {pokemon.mods.ironBall && (
+              <img
+                src={require("./../icons/Dream_Iron_Ball_Sprite.png")}
+                alt="Iron Ball icon"
+                className="size-6"
+              />
+            )}
             {pokemon.mods.paralyzed && <LightningIcon />}
           </>
         )}

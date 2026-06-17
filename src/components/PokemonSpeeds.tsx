@@ -39,6 +39,7 @@ export default function PokemonSpeeds({
   const [isTailwind, setIsTailwind] = useState(false);
   const [isChoiceScarf, setIsChoiceScarf] = useState(false);
   const [isParalyzed, setIsParalyzed] = useState(false);
+  const [isIronBall, setIsIronBall] = useState(false);
 
   const [searchPokemon, setSearchPokemon] = useState<{ name: string }>();
 
@@ -51,7 +52,15 @@ export default function PokemonSpeeds({
       behavior: "auto",
       block: "center",
     });
-  }, [evPoints, natureMod, statMods, isTailwind, isChoiceScarf, isParalyzed]);
+  }, [
+    evPoints,
+    natureMod,
+    statMods,
+    isTailwind,
+    isChoiceScarf,
+    isParalyzed,
+    isIronBall,
+  ]);
 
   useEffect(() => {
     updateOutOfViewPokemon();
@@ -86,6 +95,7 @@ export default function PokemonSpeeds({
             isTailwind,
             isChoiceScarf,
             isParalyzed,
+            isIronBall,
           ),
     }));
 
@@ -99,7 +109,8 @@ export default function PokemonSpeeds({
       pokemon.mods.statChanges === statMods &&
       pokemon.mods.tailwind === isTailwind &&
       pokemon.mods.choiceScarf === isChoiceScarf &&
-      pokemon.mods.paralyzed === isParalyzed
+      pokemon.mods.paralyzed === isParalyzed &&
+      pokemon.mods.ironBall === isIronBall
     ) {
       const foundPinnedPokemon = everyPokemonCalculatedSpeeds.findIndex(
         (poke) =>
@@ -141,6 +152,7 @@ export default function PokemonSpeeds({
         tailwind: isTailwind,
         choiceScarf: isChoiceScarf,
         paralyzed: isParalyzed,
+        ironBall: isIronBall,
       },
     };
 
@@ -214,6 +226,10 @@ export default function PokemonSpeeds({
 
   const handleParalyzedChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsParalyzed(e.target.checked);
+  };
+
+  const handleIronBallChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsIronBall(e.target.checked);
   };
 
   const scrollToSearchPokemon = (searchScrollPokemon: { name: string }) => {
@@ -343,6 +359,7 @@ export default function PokemonSpeeds({
               isTailwind={isTailwind}
               isChoiceScarf={isChoiceScarf}
               isParalyzed={isParalyzed}
+              isIronBall={isIronBall}
               handleEVFieldChange={handleEVFieldChange}
               handleEVPointsChange={handleEVPointsChange}
               handleNatureModChange={handleNatureModChange}
@@ -350,6 +367,7 @@ export default function PokemonSpeeds({
               handleTailwindChange={handleTailwindChange}
               handleChoiceScarfChange={handleChoiceScarfChange}
               handleParalyzedChange={handleParalyzedChange}
+              handleIronBallChange={handleIronBallChange}
             />
           </FormControl>
           <Autocomplete

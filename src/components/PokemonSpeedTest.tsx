@@ -27,6 +27,7 @@ export default function PokemonSpeedTest() {
       tailwind: boolean;
       choiceScarf: boolean;
       paralyzed: boolean;
+      ironBall: boolean;
     },
     pokeApiId: number,
   ) => {

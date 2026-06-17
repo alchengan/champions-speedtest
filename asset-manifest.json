@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/champions-speedtest/static/css/main.c1605c33.css",
-    "main.js": "/champions-speedtest/static/js/main.0964e42d.js",
+    "main.js": "/champions-speedtest/static/js/main.643bdf2f.js",
     "static/js/453.3962d4b6.chunk.js": "/champions-speedtest/static/js/453.3962d4b6.chunk.js",
+    "static/media/Dream_Iron_Ball_Sprite.png": "/champions-speedtest/static/media/Dream_Iron_Ball_Sprite.dbfa82b8ec9ba70072e1.png",
     "index.html": "/champions-speedtest/index.html",
     "main.c1605c33.css.map": "/champions-speedtest/static/css/main.c1605c33.css.map",
-    "main.0964e42d.js.map": "/champions-speedtest/static/js/main.0964e42d.js.map",
+    "main.643bdf2f.js.map": "/champions-speedtest/static/js/main.643bdf2f.js.map",
     "453.3962d4b6.chunk.js.map": "/champions-speedtest/static/js/453.3962d4b6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c1605c33.css",
-    "static/js/main.0964e42d.js"
+    "static/js/main.643bdf2f.js"
   ]
 }

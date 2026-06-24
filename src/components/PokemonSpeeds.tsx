@@ -14,6 +14,8 @@ import {
 import PokemonSpeedList from "./PokemonSpeedList";
 import { alphaSortPokemonSpeeds } from "../helpers/otherHelpers";
 
+const pinnedMons = () => JSON.parse(localStorage.getItem("pinnedMons") || "[]");
+
 interface PokemonSpeedsProps {
   userPokemon?: PokemonSpeedWithAbility;
   teamPokemon: PokemonSpeedWithAbility[];
@@ -29,9 +31,8 @@ export default function PokemonSpeeds({
   const [slowerPokemon, setSlowerPokemon] = useState<PokemonSpeedWithAbility[]>(
     [],
   );
-  const [pinnedPokemon, setPinnedPokemon] = useState<PokemonSpeedWithAbility[]>(
-    [],
-  );
+  const [pinnedPokemon, setPinnedPokemon] =
+    useState<PokemonSpeedWithAbility[]>(pinnedMons());
 
   const [evPoints, setEvPoints] = useState(0);
   const [natureMod, setNatureMod] = useState<string>("neutral");
@@ -159,6 +160,7 @@ export default function PokemonSpeeds({
     if (!_pinnedPokemon.includes(pokemonToPin)) {
       _pinnedPokemon.push(pokemonToPin);
       setPinnedPokemon(_pinnedPokemon);
+      localStorage.setItem("pinnedMons", JSON.stringify(_pinnedPokemon));
     }
   };
 
@@ -168,6 +170,7 @@ export default function PokemonSpeeds({
     if (index > -1) {
       _pinnedPokemon.splice(index, 1);
       setPinnedPokemon(_pinnedPokemon);
+      localStorage.setItem("pinnedMons", JSON.stringify(_pinnedPokemon));
     }
   };
 

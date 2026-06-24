@@ -15,6 +15,7 @@ import { Button } from "@mui/material";
 import AboutIcon from "../icons/AboutIcon";
 
 interface PokemonBuildProps {
+  baseTeamPokemon: PokemonSpeedWithAbility[];
   handleUserPokemonChange: (
     name: string,
     speed: number,
@@ -34,6 +35,7 @@ interface PokemonBuildProps {
 }
 
 export default function PokemonBuild({
+  baseTeamPokemon,
   handleUserPokemonChange,
   handleTeamPokemonChange,
 }: PokemonBuildProps) {
@@ -54,7 +56,8 @@ export default function PokemonBuild({
 
   const [speedStat, setSpeedStat] = useState(0);
 
-  const [teamPokemon, setTeamPokemon] = useState<PokemonSpeedWithAbility[]>([]);
+  const [teamPokemon, setTeamPokemon] =
+    useState<PokemonSpeedWithAbility[]>(baseTeamPokemon);
   const [abilityLimbo, setAbilityLimbo] = useState("");
 
   const [editPokemon, setEditPokemon] = useState(false);

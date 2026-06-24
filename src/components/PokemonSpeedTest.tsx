@@ -4,9 +4,12 @@ import PokemonSpeeds from "./PokemonSpeeds";
 import { useEffect, useState } from "react";
 import { PokemonSpeedWithAbility } from "../helpers/getPokemon";
 
+const teamMons = () => JSON.parse(localStorage.getItem("teamMons") || "[]");
+
 export default function PokemonSpeedTest() {
   const [userPokemon, setUserPokemon] = useState<PokemonSpeedWithAbility>();
-  const [teamPokemon, setTeamPokemon] = useState<PokemonSpeedWithAbility[]>([]);
+  const [teamPokemon, setTeamPokemon] =
+    useState<PokemonSpeedWithAbility[]>(teamMons());
 
   // keep user mon in view when changing user mon stats
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function PokemonSpeedTest() {
 
   const handleTeamPokemonChange = (teamPokemon: PokemonSpeedWithAbility[]) => {
     setTeamPokemon(teamPokemon);
+    localStorage.setItem("teamMons", JSON.stringify(teamPokemon));
   };
 
   return (
@@ -51,6 +55,7 @@ export default function PokemonSpeedTest() {
           <Card>
             <CardContent className="bg-slate-300">
               <PokemonBuild
+                baseTeamPokemon={teamPokemon}
                 handleUserPokemonChange={handleUserPokemonChange}
                 handleTeamPokemonChange={handleTeamPokemonChange}
               />
